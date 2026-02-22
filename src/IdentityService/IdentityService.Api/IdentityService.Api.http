@@ -1,6 +1,6 @@
-@AuthService.Web_HostAddress = http://localhost:5268
+@IdentityService.Web_HostAddress = http://localhost:5268
 
-GET {{AuthService.Web_HostAddress}}/weatherforecast/
+GET {{IdentityService.Web_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###

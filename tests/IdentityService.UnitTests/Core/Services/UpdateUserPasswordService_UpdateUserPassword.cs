@@ -3,7 +3,7 @@ using CSharpFunctionalExtensions;
 
 namespace IdentityService.UnitTests.Core.Services;
 
-// public class UpdateUserPaswwordSevice_UpdateUserPassword
+// public class UpdateUserPasswordService_UpdateUserPassword
 // {
 //     private readonly IRepository<User> _repository = Substitute.For<IRepository<User>>();
 //     private readonly IMediator _mediator = Substitute.For<IMediator>();
@@ -11,7 +11,7 @@ namespace IdentityService.UnitTests.Core.Services;
 //
 //     private readonly UpdateUserPasswordService _service;
 //
-//     public UpdateUserPaswwordSevice_UpdateUserPassword()
+//     public UpdateUserPasswordService_UpdateUserPassword()
 //     {
 //         _service = new UpdateUserPasswordService();
 //     }

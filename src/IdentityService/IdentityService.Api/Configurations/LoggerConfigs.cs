@@ -41,7 +41,7 @@ internal static class LoggerConfigs
         var otelHeadersRaw = Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_HEADERS");
         var otelResourceRaw = Environment.GetEnvironmentVariable("OTEL_RESOURCE_ATTRIBUTES");
 
-        var otelProtocol = otelProtocolRaw != "http/protobuf" ? OtlpProtocol.HttpProtobuf : OtlpProtocol.Grpc;
+        var otelProtocol = otelProtocolRaw == "http/protobuf" ? OtlpProtocol.HttpProtobuf : OtlpProtocol.Grpc;
         var parsedResourceAttributes = ParseKeyValueList(otelResourceRaw)
             .ToDictionary(k => k.Key, object (v) => v.Value);
         var parsedHeaders = ParseKeyValueList(otelHeadersRaw);

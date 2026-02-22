@@ -3,11 +3,14 @@ namespace IdentityService.UnitTests.Core.UserAggregate;
 public class UserPasswordTests
 {
     [Theory]
-    [InlineData("12345678")]                          // Минимальная длина
+    [InlineData("12345678")]
     [InlineData("Password1")]
     [InlineData("MyP@ssw0rd")]
     [InlineData("Test!@#$%^&*()")]
-    [InlineData("abcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()_+-=[]{}|;:',./<>?")] // 64 символа (максимум)
+    [InlineData("abcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()_+-=[]{}|;:',./<>?")]
+    [InlineData("pass word")]
+    [InlineData(" pass word ")]
+    [InlineData("my password 123")]
     public void From_WhenValidPassword_ReturnsSuccess(string input)
     {
         var userPassword = UserPassword.From(input);
@@ -41,14 +44,12 @@ public class UserPasswordTests
     }
 
     [Theory]
-    [InlineData("password ")]  // Пробел в конце
-    [InlineData(" pass word")] // Пробелы внутри
-    [InlineData("pass\tword")] // Табуляция
-    [InlineData("pass\nword")] // Новая строка
-    [InlineData("pass\rword")] // Возврат каретки
-    [InlineData("пароль123")]  // Кириллица (не ASCII)
-    [InlineData("パスワード")]   // Японские иероглифы (не ASCII)
-    [InlineData("passéword")]  // Расширенный ASCII (не printable ASCII 0x21-0x7E)
+    [InlineData("pass\tword")]
+    [InlineData("pass\nword")]
+    [InlineData("pass\rword")]
+    [InlineData("пароль123")]
+    [InlineData("パスワード")]
+    [InlineData("passéword")]
     public void From_WhenInvalidCharacters_ThrowsException(string input)
     {
         Should.Throw<Vogen.ValueObjectValidationException>(() => UserPassword.From(input));

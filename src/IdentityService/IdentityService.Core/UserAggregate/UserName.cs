@@ -28,7 +28,7 @@ public partial struct UserName
             AddError($"{name} must contain {MinLength} or more characters");
 
         if (!isNull && !ValidNameRegex().IsMatch(input))
-            AddError($"{name} must contain only lowercase ASCII letters (a–z), hyphen, and period");
+            AddError($"{name} must contain only lowercase ASCII letters (a–z), digits (0–9), hyphen, and period");
 
         return result ?? Validation.Ok;
 
@@ -39,6 +39,6 @@ public partial struct UserName
         }
     }
 
-    [GeneratedRegex("^[a-z.-]+$")]
+    [GeneratedRegex("^[a-z0-9.-]+$")]
     private static partial Regex ValidNameRegex();
 }

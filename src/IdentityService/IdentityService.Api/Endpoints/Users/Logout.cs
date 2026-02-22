@@ -7,7 +7,7 @@ internal sealed class Logout : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet("users/logout", ExecuteAsync)
+        app.MapPost("users/logout", ExecuteAsync)
             .WithSummary("Logout user")
             .WithDescription("Logout and revoke token.")
             .Produces(StatusCodes.Status200OK)
@@ -17,7 +17,7 @@ internal sealed class Logout : IEndpoint
     }
 
     private static async Task<Results<Ok, ProblemHttpResult>> ExecuteAsync(
-        ILogger<Register> logger,
+        ILogger<Logout> logger,
         HttpContext ctx,
         // IMediator mediator,
         CancellationToken cancellationToken)
@@ -26,7 +26,7 @@ internal sealed class Logout : IEndpoint
         {
             var jti = ctx.User.FindFirst(JwtRegisteredClaimNames.Jti)!.Value;
             var exp = long.Parse(ctx.User.FindFirst(JwtRegisteredClaimNames.Exp)!.Value);
-            
+
             await Task.Delay(100, cancellationToken);
             return TypedResults.Ok();
         }

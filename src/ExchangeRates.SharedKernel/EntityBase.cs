@@ -24,6 +24,7 @@ public abstract class EntityBase<TId> : HasDomainEventsBase
 /// <typeparam name="TId"></typeparam>
 public abstract class EntityBase<T, TId> : HasDomainEventsBase
     where T : EntityBase<T, TId>
+    where TId : struct
 {
     public TId Id { get; set; } = default!;
 }

@@ -3,14 +3,20 @@ namespace IdentityService.UnitTests.Core.UserAggregate;
 public class UserNameTests
 {
     [Theory]
-    [InlineData("ab")]           // Минимальная длина
+    [InlineData("ab")]
     [InlineData("abc")]
     [InlineData("a-b")]
     [InlineData("a.b")]
     [InlineData("test-user")]
     [InlineData("test.user")]
     [InlineData("a.b.c-d-e")]
-    [InlineData("abcdefghijklmnopqrstuvwxabcdefghijklmnopqrstuvwxabcdefghijkl")] // 63 символа (максимум)
+    [InlineData("abcdefghijklmnopqrstuvwxabcdefghijklmnopqrstuvwxabcdefghijkl")]
+    [InlineData("a1")]
+    [InlineData("user123")]
+    [InlineData("test123-user456")]
+    [InlineData("user.name.2024")]
+    [InlineData("123")]
+    [InlineData("99-bottles")]
     public void From_WhenValidName_ReturnsSuccess(string input)
     {
         var userName = UserName.From(input);
