@@ -1,0 +1,7 @@
+﻿services:
+  testwork.exchangerates.authservice.web:
+    image: testwork.exchangerates.identityservice.web
+    build:
+      context: .
+      dockerfile: src/IdentityService/IdentityService.Api/Dockerfile
+

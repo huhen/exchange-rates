@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <!--      <ExcludeAssets>contentfiles</ExcludeAssets>-->
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration"/>
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions"/>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IdentityService.Core\IdentityService.Core.csproj" />
+    <ProjectReference Include="..\IdentityService.UseCases\IdentityService.UseCases.csproj" />
+  </ItemGroup>
+
+</Project>
