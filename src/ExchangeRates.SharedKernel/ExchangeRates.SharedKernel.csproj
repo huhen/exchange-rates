@@ -4,6 +4,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Ardalis.Specification" />
     <PackageReference Include="Mediator.Abstractions" />
   </ItemGroup>
 
