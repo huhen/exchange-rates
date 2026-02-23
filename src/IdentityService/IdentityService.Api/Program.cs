@@ -42,7 +42,7 @@ try
         app.UseSwaggerUI();
     }
     
-    // use midlewares
+    // use middlewares
     app.UseExceptionHandler();
 
     // app.UseAuthentication();
