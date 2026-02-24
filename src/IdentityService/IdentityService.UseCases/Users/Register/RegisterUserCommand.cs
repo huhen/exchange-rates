@@ -1,4 +1,3 @@
-using CSharpFunctionalExtensions;
 using IdentityService.Core.UserAggregate;
 
 namespace IdentityService.UseCases.Users.Register;

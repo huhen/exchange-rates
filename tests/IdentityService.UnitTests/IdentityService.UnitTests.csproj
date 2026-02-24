@@ -30,6 +30,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Core\UserAggregate\Events\" />
+    <Folder Include="Core\UserAggregate\Specifications\" />
     <Folder Include="UseCases\Users\" />
   </ItemGroup>
 

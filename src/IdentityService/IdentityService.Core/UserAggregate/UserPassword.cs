@@ -1,5 +1,3 @@
-using System.Text.RegularExpressions;
-
 namespace IdentityService.Core.UserAggregate;
 
 [ValueObject<string>]

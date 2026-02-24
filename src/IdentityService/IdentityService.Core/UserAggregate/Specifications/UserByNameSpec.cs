@@ -1,5 +1,3 @@
-using Ardalis.Specification;
-
 namespace IdentityService.Core.UserAggregate.Specifications;
 
 public class UserByNameSpec : Specification<User>, ISingleResultSpecification<User>

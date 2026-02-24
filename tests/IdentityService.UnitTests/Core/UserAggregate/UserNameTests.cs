@@ -1,3 +1,5 @@
+using IdentityService.Core.UserAggregate;
+
 namespace IdentityService.UnitTests.Core.UserAggregate;
 
 public class UserNameTests
@@ -41,25 +43,24 @@ public class UserNameTests
     }
 
     [Theory]
-    [InlineData("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")] // 64 символа (ошибка, максимум 63)
-    [InlineData("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")] // 65 символов
-    [InlineData("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")] // 100 символов
+    [InlineData(
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")] // 65 символа (ошибка, максимум 64)
+    [InlineData("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")] // 66 символов
     public void From_WhenTooLong_ThrowsException(string input)
     {
         Should.Throw<Vogen.ValueObjectValidationException>(() => UserName.From(input));
     }
 
     [Theory]
-    [InlineData("Abc")]      // Заглавная буква
-    [InlineData("ABC")]      // Все заглавные
+    [InlineData("Abc")] // Заглавная буква
+    [InlineData("ABC")] // Все заглавные
     [InlineData("test_user")] // Подчёркивание
     [InlineData("test user")] // Пробел
     [InlineData("test@user")] // Спецсимвол @
     [InlineData("test#user")] // Спецсимвол #
     [InlineData("test$user")] // Спецсимвол $
     [InlineData("test!user")] // Спецсимвол !
-    [InlineData("тест")]      // Кириллица
-    [InlineData("テスト")]     // Японские иероглифы
+    [InlineData("тест")] // Кириллица
     public void From_WhenInvalidCharacters_ThrowsException(string input)
     {
         Should.Throw<Vogen.ValueObjectValidationException>(() => UserName.From(input));

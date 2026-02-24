@@ -1,5 +1,3 @@
-using CSharpFunctionalExtensions;
-using ExchangeRates.SharedKernel;
 using IdentityService.Core.UserAggregate;
 
 namespace IdentityService.UseCases.Users.Register;

@@ -1,12 +1,10 @@
-using System.Text.RegularExpressions;
-
 namespace IdentityService.Core.UserAggregate;
 
 [ValueObject<string>]
 public partial struct UserName
 {
     public const int MinLength = 2;
-    public const int MaxLength = 63;
+    public const int MaxLength = 64;
 
     // private static string NormalizeInput(string input) => input.ToLowerInvariant();
 

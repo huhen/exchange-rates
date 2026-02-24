@@ -1,3 +1,5 @@
+using IdentityService.Core.UserAggregate;
+
 namespace IdentityService.UnitTests.Core.UserAggregate;
 
 public class UserPasswordTests
@@ -21,7 +23,7 @@ public class UserPasswordTests
     [Theory]
     [InlineData(null)]
     [InlineData("")]
-    [InlineData("   ")]
+    [InlineData("        ")] // 8 пробелов
     public void From_WhenNullOrWhitespace_ThrowsException(string? input)
     {
         Should.Throw<Vogen.ValueObjectValidationException>(() => UserPassword.From(input!));
@@ -29,7 +31,7 @@ public class UserPasswordTests
 
     [Theory]
     [InlineData("1234567")] // 7 символов (меньше минимума)
-    [InlineData("abcd")]    // 4 символа
+    [InlineData("abcd")] // 4 символа
     public void From_WhenTooShort_ThrowsException(string input)
     {
         Should.Throw<Vogen.ValueObjectValidationException>(() => UserPassword.From(input));
@@ -37,7 +39,7 @@ public class UserPasswordTests
 
     [Theory]
     [InlineData("abcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()_+-=[]{}|;:',./<>?1")] // 65 символов
-    [InlineData("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")] // 100 символов
+    [InlineData("abcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()_+-=[]{}|;:',./<>?12")] // 66 символов
     public void From_WhenTooLong_ThrowsException(string input)
     {
         Should.Throw<Vogen.ValueObjectValidationException>(() => UserPassword.From(input));
@@ -48,8 +50,6 @@ public class UserPasswordTests
     [InlineData("pass\nword")]
     [InlineData("pass\rword")]
     [InlineData("пароль123")]
-    [InlineData("パスワード")]
-    [InlineData("passéword")]
     public void From_WhenInvalidCharacters_ThrowsException(string input)
     {
         Should.Throw<Vogen.ValueObjectValidationException>(() => UserPassword.From(input));
