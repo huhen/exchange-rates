@@ -5,6 +5,5 @@ global using System.Threading.Tasks;
 global using ExchangeRates.SharedKernel;
 global using Mediator;
 global using NSubstitute;
-global using NSubstitute.ReturnsExtensions;
 global using Shouldly;
 global using Xunit;

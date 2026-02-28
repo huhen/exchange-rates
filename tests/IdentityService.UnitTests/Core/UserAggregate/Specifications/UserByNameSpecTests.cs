@@ -10,7 +10,7 @@ public class UserByNameSpecTests
     {
         var userName = UserName.From("test-user");
         var spec = new UserByNameSpec(userName);
-        var user = new User(userName, UserPassword.From("Password1"));
+        var user = new User(userName, UserPasswordHash.From("Password1"));
 
         var result = spec.Evaluate([user]).SingleOrDefault();
 
@@ -22,7 +22,7 @@ public class UserByNameSpecTests
     {
         var userName = UserName.From("test-user");
         var spec = new UserByNameSpec(userName);
-        var otherUser = new User(UserName.From("other-user"), UserPassword.From("Password1"));
+        var otherUser = new User(UserName.From("other-user"), UserPasswordHash.From("Password1"));
 
         var result = spec.Evaluate([otherUser]).SingleOrDefault();
 
@@ -34,8 +34,8 @@ public class UserByNameSpecTests
     {
         var userName = UserName.From("test-user");
         var spec = new UserByNameSpec(userName);
-        var user1 = new User(userName, UserPassword.From("Password1"));
-        var user2 = new User(UserName.From("other-user"), UserPassword.From("Password1"));
+        var user1 = new User(userName, UserPasswordHash.From("Password1"));
+        var user2 = new User(UserName.From("other-user"), UserPasswordHash.From("Password1"));
 
         var result = spec.Evaluate([user1, user2]).SingleOrDefault();
 

@@ -432,5 +432,11 @@ riderModule.iml
 DeploymentSettings.props
 Packages.props
 
-#Local Log Files
+# Local Log Files
 log*.txt
+
+# Local containers
+.containers/
+
+# Demo key
+!/src/IdentityService/IdentityService.Api/ecdsa-cert-demo.pfx

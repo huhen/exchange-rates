@@ -21,6 +21,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="NSubstitute" />
+    <PackageReference Include="NSubstitute.Analyzers.CSharp">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="ReportGenerator" />
     <PackageReference Include="Shouldly" />
     <PackageReference Include="System.Linq.Async" />
@@ -34,6 +38,8 @@
     <Folder Include="Core\UserAggregate\Events\" />
     <Folder Include="Core\UserAggregate\Specifications\" />
     <Folder Include="UseCases\Users\" />
+    <Folder Include="UseCases\Users\Register\" />
+    <Folder Include="UseCases\Users\ValidateCredentials\" />
   </ItemGroup>
 
   <ItemGroup>

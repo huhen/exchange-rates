@@ -9,7 +9,7 @@ internal sealed class Logout : IEndpoint
     {
         app.MapPost("users/logout", ExecuteAsync)
             .WithSummary("Logout user")
-            .WithDescription("Logout and revoke token.")
+            .WithDescription("Logout and revoke refresh token.")
             .Produces(StatusCodes.Status200OK)
             .ProducesProblem(StatusCodes.Status500InternalServerError)
             .WithTags(Tags.Users)

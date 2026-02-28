@@ -9,9 +9,6 @@ namespace IdentityService.Api.Configurations;
 
 internal static class LoggerConfigs
 {
-    private const string HealthEndpointPath = "/health";
-    private const string AlivenessEndpointPath = "/alive";
-
     internal static WebApplicationBuilder AddLoggerConfigs(this WebApplicationBuilder builder)
     {
         var serviceName = builder.Environment.ApplicationName;
@@ -96,8 +93,8 @@ internal static class LoggerConfigs
                 tracing.AddAspNetCoreInstrumentation(options =>
                         // Exclude health check requests from tracing
                         options.Filter = context =>
-                            !context.Request.Path.StartsWithSegments(HealthEndpointPath)
-                            && !context.Request.Path.StartsWithSegments(AlivenessEndpointPath)
+                            !context.Request.Path.StartsWithSegments(HealthCheckConfig.HealthEndpointPath)
+                            && !context.Request.Path.StartsWithSegments(HealthCheckConfig.AlivenessEndpointPath)
                     )
                     .AddHttpClientInstrumentation()
                     .AddOtlpExporter();

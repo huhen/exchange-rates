@@ -7,4 +7,9 @@
     <ProjectReference Include="..\IdentityService.Core\IdentityService.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="EntityFrameworkCore.Exceptions.Common" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" />
+  </ItemGroup>
+
 </Project>

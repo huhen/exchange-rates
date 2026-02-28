@@ -12,7 +12,7 @@ public class UserNameTests
     [InlineData("test-user")]
     [InlineData("test.user")]
     [InlineData("a.b.c-d-e")]
-    [InlineData("abcdefghijklmnopqrstuvwxabcdefghijklmnopqrstuvwxabcdefghijkl")]
+    [InlineData("64-abcdefghijklmnopqrstuvwxabcdefghijklmnopqrstuvwxabcdefghijklm")]
     [InlineData("a1")]
     [InlineData("user123")]
     [InlineData("test123-user456")]
@@ -44,7 +44,7 @@ public class UserNameTests
 
     [Theory]
     [InlineData(
-        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")] // 65 символа (ошибка, максимум 64)
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")] // 65 символа
     [InlineData("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")] // 66 символов
     public void From_WhenTooLong_ThrowsException(string input)
     {

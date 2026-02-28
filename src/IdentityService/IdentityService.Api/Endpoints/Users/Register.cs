@@ -1,4 +1,8 @@
+using IdentityService.Api.Helpers;
+using IdentityService.Core.UserAggregate;
+using IdentityService.UseCases.Users.Register;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 
 namespace IdentityService.Api.Endpoints.Users;
 
@@ -10,32 +14,43 @@ internal sealed class Register : IEndpoint
     {
         app.MapPost("users/register", ExecuteAsync)
             .WithSummary("Register a new user")
-            .WithDescription("""
-                             Register a new user with the provided name and password.
-                             The user name must be between 2 and 100 characters long.
-                             The password must be between 8 and 64 characters long.
-                             """)
+            .WithDescription($"""
+                              Register a new user with the provided name and password.
+                              The user name must be between {UserName.MinLength} and {UserName.MaxLength} characters long.
+                              The password must be between {UserPassword.MinLength} and {UserPassword.MaxLength} characters long.
+                              """)
             .Accepts<RegisterRequest>("application/json")
-            .Produces<RegisterRequest>(StatusCodes.Status201Created)
+            .Produces(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
+            .ProducesProblem(StatusCodes.Status409Conflict)
             .ProducesProblem(StatusCodes.Status500InternalServerError)
             .WithTags(Tags.Users);
     }
 
-    private static async Task<Results<Created, ValidationProblem, ProblemHttpResult>> ExecuteAsync(
+    private static async ValueTask<Results<Created, ValidationProblem, Conflict<ProblemDetails>>> ExecuteAsync(
         RegisterRequest request,
         ILogger<Register> logger,
         HttpContext ctx,
-        // IMediator mediator,
+        IMediator mediator,
         CancellationToken cancellationToken)
     {
-        // try
-        // {
-        await Task.Delay(100, cancellationToken);
+        var userName = UserName.TryFrom(request.UserName);
+        var userPassword = UserPassword.TryFrom(request.Password);
+
+        if (VogenValidationHelper.Validate(
+                userName, nameof(request.UserName),
+                userPassword, nameof(request.Password))
+            is { } validationProblem)
+        {
+            return validationProblem;
+        }
+
+        var command = new RegisterUserCommand(userName.ValueObject, userPassword.ValueObject);
+        var result = await mediator.Send(command, cancellationToken);
+
+        if (result.IsFailure)
+            return TypedResults.Conflict(new ProblemDetails { Detail = result.Error });
+
         return TypedResults.Created();
-        // }
-        //     logger.LogError(ex, "An error occurred during user registration");
-        //     return TypedResults.Problem(detail: "Internal server error", statusCode: 500);
-        // }
     }
 }

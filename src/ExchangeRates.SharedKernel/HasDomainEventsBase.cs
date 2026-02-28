@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations.Schema;
-
 namespace ExchangeRates.SharedKernel;
 
 public abstract class HasDomainEventsBase : IHasDomainEvents
