@@ -1,14 +1,33 @@
 ﻿---
 services:
-  #  identityservice:
-  #    image: testwork.exchangerates.identityservice.api
-  #    container_name: identityservice
-  #    build:
-  #      context: .
-  #      dockerfile: src/IdentityService/IdentityService.Api/Dockerfile
-  #    depends_on:
-  #      postgres:
-  #        condition: service_healthy
+  identity-service:
+    container_name: identity-service
+    #    image: testwork.exchangerates.identityservice.api
+    build:
+      context: .
+      dockerfile: src/IdentityService/IdentityService.Api/Dockerfile
+    restart: unless-stopped
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_HTTP_PORTS=8080
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://seq:5341/ingest/otlp
+      - OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
+      - OTEL_EXPORTER_OTLP_HEADERS=X-Seq-ApiKey=0RZkTerN8UAQr4cmxlPq
+    ports:
+      - "8081:8080"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 256M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
 
   postgres:
     image: postgres:18
@@ -33,7 +52,7 @@ services:
     image: redis:8
     container_name: redis
     restart: unless-stopped
-#    environment:
+    #    environment:
     volumes:
       - ./.containers/redis:/data
     ports:
@@ -53,10 +72,15 @@ services:
       retries: 5
       start_period: 10s
 
-#  seq:
-#    image: datalust/seq:2025
-#    container_name: seq
-#    environment:
-#      - ACCEPT_EULA=Y
-#    ports:
-#      - 8081:80
+  seq:
+    image: datalust/seq:2025
+    container_name: seq
+    restart: unless-stopped
+    environment:
+      - ACCEPT_EULA=Y
+      - SEQ_FIRSTRUN_NOAUTHENTICATION=true
+      - SEQ_APIKEY=0RZkTerN8UAQr4cmxlPq
+    volumes:
+      - ./.containers/seq:/data
+    ports:
+      - "9080:80"

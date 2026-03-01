@@ -1,3 +1,4 @@
+using Npgsql;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
@@ -97,6 +98,8 @@ internal static class LoggerConfigs
                             && !context.Request.Path.StartsWithSegments(HealthCheckConfig.AlivenessEndpointPath)
                     )
                     .AddHttpClientInstrumentation()
+                    .AddNpgsql()
+                    .AddRedisInstrumentation()
                     .AddOtlpExporter();
             })
             .WithMetrics(metrics =>
