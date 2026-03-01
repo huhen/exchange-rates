@@ -6,6 +6,11 @@ namespace IdentityService.Api.Configurations;
 
 public static class MiddlewareConfig
 {
+    /// <summary>
+    /// Configures application middleware and endpoint mappings, enabling request logging, global exception handling, authentication, and (in development) Swagger and database seeding.
+    /// </summary>
+    /// <param name="app">The web application to configure.</param>
+    /// <returns>The configured <see cref="IApplicationBuilder"/> instance.</returns>
     public static async Task<IApplicationBuilder> UseAppMiddleware(this WebApplication app)
     {
         app.UseSerilogRequestLogging();
@@ -33,6 +38,10 @@ public static class MiddlewareConfig
         return app;
     }
 
+    /// <summary>
+    /// Applies pending EF Core migrations and initializes seed data using a scoped service provider, logging any errors that occur.
+    /// </summary>
+    /// <param name="app">The WebApplication whose service provider is used to create the scope for obtaining the database context and other services.</param>
     static async Task SeedDatabase(WebApplication app)
     {
         using var scope = app.Services.CreateScope();

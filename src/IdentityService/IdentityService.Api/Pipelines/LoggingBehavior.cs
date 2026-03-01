@@ -7,6 +7,13 @@ public class LoggingBehavior<TRequest, TResponse>(ILogger<LoggingBehavior<TReque
     : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IMessage
 {
+    /// <summary>
+    /// Logs request handling (Information and optional per-property Trace), measures handling time, invokes the next pipeline delegate, and returns its response.
+    /// </summary>
+    /// <param name="request">The request message being handled and logged.</param>
+    /// <param name="next">Delegate that produces the response by continuing pipeline execution.</param>
+    /// <param name="cancellationToken">Token to observe for cancellation when invoking <paramref name="next"/>.</param>
+    /// <returns>The response produced by the next pipeline handler.</returns>
     public async ValueTask<TResponse> Handle(
         TRequest request,
         MessageHandlerDelegate<TRequest, TResponse> next,

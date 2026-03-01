@@ -5,6 +5,11 @@ public partial struct UserPasswordHash
 {
     public const int MaxLength = 64;
 
+    /// <summary>
+    /// Validates the input string against UserPasswordHash requirements (presence and maximum length).
+    /// </summary>
+    /// <param name="input">The string to validate as a UserPasswordHash; may be null or whitespace.</param>
+    /// <returns>A <see cref="Validation"/> that is <c>Validation.Ok</c> when valid, or <c>Validation.Invalid</c> containing one or more attached error messages when invalid.</returns>
     private static Validation Validate(string input)
     {
         const string name = nameof(UserPasswordHash);

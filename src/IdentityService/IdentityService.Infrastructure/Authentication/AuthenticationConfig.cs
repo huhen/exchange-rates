@@ -16,12 +16,20 @@ namespace IdentityService.Infrastructure.Authentication;
 
 public static class AuthenticationConfig
 {
+    /// <summary>
+    /// Registers JWT-based authentication and the application's authorization services into the provided service collection.
+    /// </summary>
+    /// <returns>The same <see cref="IServiceCollection"/> with authentication and authorization services configured.</returns>
     internal static IServiceCollection AddAuthenticationConfig(this IServiceCollection services,
         IConfiguration configuration)
     {
         return services.AddJwtAuthentication(configuration).AddAuthorizationInternal();
     }
 
+    /// <summary>
+    /// Configures JWT bearer authentication, OpenID Connect metadata, and related services and providers in the dependency injection container.
+    /// </summary>
+    /// <returns>The updated <see cref="IServiceCollection"/> with JWT authentication, OpenID configuration, and related service registrations applied.</returns>
     private static IServiceCollection AddJwtAuthentication(this IServiceCollection services,
         IConfiguration configuration)
     {
@@ -71,6 +79,10 @@ public static class AuthenticationConfig
         return services;
     }
 
+    /// <summary>
+    /// Registers authorization infrastructure and permission-based authorization services.
+    /// </summary>
+    /// <returns>The original <see cref="IServiceCollection"/> with authorization services and related handlers registered.</returns>
     private static IServiceCollection AddAuthorizationInternal(this IServiceCollection services)
     {
         services.AddAuthorization();
@@ -80,6 +92,12 @@ public static class AuthenticationConfig
         return services;
     }
 
+    /// <summary>
+    /// Registers a JWKS (JSON Web Key Set) response singleton derived from the EC public key of the configured certificate.
+    /// </summary>
+    /// <param name="services">The service collection to register the JWKS response into.</param>
+    /// <param name="jwtTokenOptions">JWT token options containing the certificate path and password used to build the JWKS entry.</param>
+    /// <returns>The same <see cref="IServiceCollection"/> to allow fluent chaining.</returns>
     private static IServiceCollection AddJwksResponse(this IServiceCollection services, JwtTokenOptions jwtTokenOptions)
     {
         using var certificate = new X509Certificate2(
@@ -113,6 +131,10 @@ public static class AuthenticationConfig
         return services;
     }
 
+    /// <summary>
+    /// Enables authentication and authorization middleware on the application and exposes OpenID Connect metadata endpoints.
+    /// </summary>
+    /// <returns>The same <see cref="WebApplication"/> instance with authentication/authorization enabled and OpenID configuration and JWKS GET endpoints mapped (excluded from API descriptions).</returns>
     public static WebApplication MapAuthentications(this WebApplication app)
     {
         app.UseAuthentication();
@@ -126,11 +148,21 @@ public static class AuthenticationConfig
         return app;
     }
 
+    /// <summary>
+    /// Returns the provided OpenID Connect discovery metadata as an HTTP 200 result.
+    /// </summary>
+    /// <param name="metadata">The OpenID Connect configuration metadata to return.</param>
+    /// <returns>An OK result containing the given <see cref="OpenIdConfigurationResponse"/>.</returns>
     private static Ok<OpenIdConfigurationResponse> OpenIdConfigurationEndpoint(OpenIdConfigurationResponse metadata)
     {
         return TypedResults.Ok(metadata);
     }
 
+    /// <summary>
+    /// Returns the provided JWKS (JSON Web Key Set) response as an HTTP 200 OK result.
+    /// </summary>
+    /// <param name="metadata">The JWKS payload to return to clients.</param>
+    /// <returns>An OK result containing the given <see cref="JwksResponse"/>.</returns>
     private static Ok<JwksResponse> JwksEndpoint(JwksResponse metadata)
     {
         return TypedResults.Ok(metadata);

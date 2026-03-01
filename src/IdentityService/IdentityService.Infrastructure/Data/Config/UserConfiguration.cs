@@ -5,6 +5,10 @@ namespace IdentityService.Infrastructure.Data.Config;
 
 public class UserConfiguration : IEntityTypeConfiguration<User>
 {
+    /// <summary>
+    /// Configures the EF Core mapping for the <see cref="User"/> entity.
+    /// </summary>
+    /// <param name="builder">The entity type builder used to configure keys, properties, constraints, and indexes for <see cref="User"/>.</param>
     public void Configure(EntityTypeBuilder<User> builder)
     {
         builder.HasKey(entity => entity.Id);

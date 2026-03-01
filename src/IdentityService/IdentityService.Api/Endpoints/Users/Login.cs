@@ -12,6 +12,10 @@ internal sealed class Login : IEndpoint
 
     public sealed record LoginResponse(string AccessToken);
 
+    /// <summary>
+    /// Registers the POST /users/login endpoint on the provided route builder and configures its request and response metadata.
+    /// </summary>
+    /// <param name="app">The endpoint route builder to add the login endpoint to.</param>
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapPost("users/login", ExecuteAsync)
@@ -25,6 +29,12 @@ internal sealed class Login : IEndpoint
             .WithTags(Tags.Users);
     }
 
+    /// <summary>
+    /// Handle a login request by validating the supplied credentials and issuing an access token when authentication succeeds.
+    /// </summary>
+    /// <param name="request">Incoming login payload containing the user name and password.</param>
+    /// <param name="cancellationToken">Token to cancel the operation.</param>
+    /// <returns>`Ok&lt;LoginResponse&gt;` containing an access token on successful authentication; `ValidationProblem` when input validation fails; `ProblemHttpResult` carrying a 401 Unauthorized detail for invalid credentials or other problem details for server errors.</returns>
     private static async ValueTask<Results<Ok<LoginResponse>, ValidationProblem, ProblemHttpResult>> ExecuteAsync(
         LoginRequest request,
         ILogger<Login> logger,

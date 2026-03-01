@@ -8,7 +8,12 @@ namespace IdentityService.Api.Configurations;
 
 public static class MediatorConfig
 {
-    // Should be called from ServiceConfigs.cs, not Program.cs
+    /// <summary>
+    /// Registers MediatR Source Generator integration and pipeline behaviors into the provided service collection.
+    /// </summary>
+    /// <param name="services">The service collection to configure.</param>
+    /// <param name="logger">Logger used to emit setup information.</param>
+    /// <returns>The same <see cref="IServiceCollection"/> instance with mediator services and pipeline behaviors registered.</returns>
     public static IServiceCollection AddMediatorSourceGen(this IServiceCollection services,
         Microsoft.Extensions.Logging.ILogger logger)
     {

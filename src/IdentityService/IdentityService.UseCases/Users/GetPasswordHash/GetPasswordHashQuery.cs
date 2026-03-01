@@ -6,6 +6,10 @@ public record GetPasswordHashQuery(UserName Name) : IQuery<UserIdAndHashDto?>, I
 {
     public string CacheProfile => nameof(GetPasswordHashQuery);
 
+    /// <summary>
+    /// Produces the cache key for this query by combining the query type name with the wrapped user name value.
+    /// </summary>
+    /// <returns>The cache key in the format "GetPasswordHashQuery-{userNameValue}".</returns>
     public string GetCacheKey()
     {
         return $"{nameof(GetPasswordHashQuery)}-{Name.Value}";

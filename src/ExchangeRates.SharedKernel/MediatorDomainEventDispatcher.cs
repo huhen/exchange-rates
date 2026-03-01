@@ -5,6 +5,10 @@ public class MediatorDomainEventDispatcher(
     ILogger<MediatorDomainEventDispatcher> logger
 ) : IDomainEventDispatcher
 {
+    /// <summary>
+    /// Publishes each domain event from the provided entities and clears those events from each entity after capturing them.
+    /// </summary>
+    /// <param name="entitiesWithEvents">A collection of entities to process; for each entity that implements <see cref="IHasDomainEvents"/>, its domain events are published and then cleared.</param>
     public async Task DispatchAndClearEvents(IEnumerable<IHasDomainEvents> entitiesWithEvents)
     {
         foreach (IHasDomainEvents entity in entitiesWithEvents)

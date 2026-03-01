@@ -4,6 +4,11 @@ namespace IdentityService.Infrastructure.Caching;
 
 public static class HybridCacheConfig
 {
+    /// <summary>
+    /// Configures caching-related services by binding CachingOptions, registering HybridCache, and conditionally adding Redis and its health check.
+    /// </summary>
+    /// <param name="instanceName">Instance name applied to the Redis cache entries when a Redis connection string is present.</param>
+    /// <returns>The modified <see cref="IServiceCollection"/>.</returns>
     internal static IServiceCollection AddHybridCacheConfig(this IServiceCollection services,
         IConfiguration configuration, string instanceName)
     {

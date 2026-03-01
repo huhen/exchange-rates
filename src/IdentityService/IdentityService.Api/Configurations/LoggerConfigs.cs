@@ -10,6 +10,10 @@ namespace IdentityService.Api.Configurations;
 
 internal static class LoggerConfigs
 {
+    /// <summary>
+    /// Configures Serilog and OpenTelemetry integration on the provided WebApplicationBuilder.
+    /// </summary>
+    /// <returns>The same WebApplicationBuilder instance with Serilog and OpenTelemetry integration applied.</returns>
     internal static WebApplicationBuilder AddLoggerConfigs(this WebApplicationBuilder builder)
     {
         var serviceName = builder.Environment.ApplicationName;
@@ -28,6 +32,13 @@ internal static class LoggerConfigs
         return builder.ConfigureOpenTelemetry(serviceName, instanceId);
     }
 
+    /// <summary>
+    /// Configures the provided Serilog LoggerConfiguration to export logs to an OpenTelemetry (OTLP) collector when an OTLP endpoint is specified via environment variables.
+    /// </summary>
+    /// <param name="loggerConfig">The LoggerConfiguration to augment.</param>
+    /// <param name="serviceName">Value to set for the `service.name` resource attribute sent to the OTLP collector.</param>
+    /// <param name="instanceId">Value to set for the `service.instance.id` resource attribute sent to the OTLP collector.</param>
+    /// <returns>The original LoggerConfiguration with an OpenTelemetry sink configured when an OTLP endpoint is present; otherwise the original LoggerConfiguration unchanged.</returns>
     private static LoggerConfiguration ConfigureOpenTelemetry(this LoggerConfiguration loggerConfig, string serviceName,
         string instanceId)
     {
@@ -56,6 +67,11 @@ internal static class LoggerConfigs
         });
     }
 
+    /// <summary>
+    /// Parses a comma-separated list of key=value pairs into a dictionary.
+    /// </summary>
+    /// <param name="input">A string containing comma-separated `key=value` pairs; keys and values may contain surrounding whitespace.</param>
+    /// <returns>A dictionary mapping each parsed key to its corresponding trimmed value. Pairs without an '=' or with an empty key are ignored; when a key appears multiple times, the last value wins.</returns>
     private static Dictionary<string, string> ParseKeyValueList(string? input)
     {
         var dict = new Dictionary<string, string>();
@@ -80,6 +96,13 @@ internal static class LoggerConfigs
         return dict;
     }
 
+    /// <summary>
+    /// Registers OpenTelemetry tracing and metrics into the application's DI container and configures the service resource.
+    /// </summary>
+    /// <param name="builder">The WebApplicationBuilder to configure.</param>
+    /// <param name="serviceName">The name to set for the OpenTelemetry service resource.</param>
+    /// <param name="instanceId">The instance identifier to set for the OpenTelemetry service resource.</param>
+    /// <returns>The same <see cref="WebApplicationBuilder"/> instance after OpenTelemetry services have been added.</returns>
     private static WebApplicationBuilder ConfigureOpenTelemetry(this WebApplicationBuilder builder, string serviceName,
         string instanceId)
     {

@@ -17,6 +17,10 @@ public sealed class TokenProvider : ITokenProvider
     private readonly SigningCredentials _credentials;
     private readonly JsonWebTokenHandler _handler;
 
+    /// <summary>
+    /// Initializes the token provider from configured JWT options and prepares the ECDSA signing credentials and JSON web token handler.
+    /// </summary>
+    /// <param name="options">An <see cref="IOptions{JwtTokenOptions}"/> containing issuer, audience, expiration and certificate settings used to create the signing key.</param>
     public TokenProvider(IOptions<JwtTokenOptions> options)
     {
         _settings = options.Value;
@@ -37,6 +41,11 @@ public sealed class TokenProvider : ITokenProvider
         _handler = new JsonWebTokenHandler();
     }
 
+    /// <summary>
+    /// Creates a JSON Web Token containing the user's subject, a unique token id, and a role claim granting user access.
+    /// </summary>
+    /// <param name="userId">The identifier of the user to include as the token subject.</param>
+    /// <returns>A JWT as a compact serialized string.</returns>
     public string Create(UserId userId)
     {
         var now = DateTime.UtcNow;
