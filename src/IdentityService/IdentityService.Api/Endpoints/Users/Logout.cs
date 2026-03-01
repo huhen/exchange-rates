@@ -1,4 +1,7 @@
-using System.IdentityModel.Tokens.Jwt;
+using IdentityService.Api.Configurations;
+using IdentityService.Core.UserAggregate;
+using IdentityService.Infrastructure.Authorization;
+using IdentityService.UseCases.Abstractions.Authentication;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace IdentityService.Api.Endpoints.Users;
@@ -13,27 +16,18 @@ internal sealed class Logout : IEndpoint
             .Produces(StatusCodes.Status200OK)
             .ProducesProblem(StatusCodes.Status500InternalServerError)
             .WithTags(Tags.Users)
+            .HasPermission(Permissions.UsersAccess)
             .RequireAuthorization();
     }
 
-    private static async Task<Results<Ok, ProblemHttpResult>> ExecuteAsync(
+    private static Ok ExecuteAsync(
         ILogger<Logout> logger,
-        HttpContext ctx,
+        // IUserContext userContext,
         // IMediator mediator,
         CancellationToken cancellationToken)
     {
-        try
-        {
-            var jti = ctx.User.FindFirst(JwtRegisteredClaimNames.Jti)!.Value;
-            var exp = long.Parse(ctx.User.FindFirst(JwtRegisteredClaimNames.Exp)!.Value);
+        // TODO: Revoke refresh token
 
-            await Task.Delay(100, cancellationToken);
-            return TypedResults.Ok();
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Ошибка при получении состояния модема");
-            return TypedResults.Problem(detail: "Внутренняя ошибка сервера", statusCode: 500);
-        }
+        return TypedResults.Ok();
     }
 }

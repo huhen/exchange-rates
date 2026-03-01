@@ -43,12 +43,12 @@ try
     builder.Services.AddOptionConfigs(appLogger);
 
     builder.Services.AddCoreServices(appLogger)
-        .AddInfrastructureServices(builder.Configuration, appLogger, environmentName)
+        .AddInfrastructureServices(builder.Configuration, appLogger, environmentName, builder.Environment.ApplicationName)
         .AddMediatorSourceGen(appLogger);
 
     builder.Services.AddPresentationConfig(builder.Configuration, Assembly.GetExecutingAssembly());
 
-    builder.Services.AddHybridCacheConfig(builder.Configuration, builder.Environment.ApplicationName);
+    
 
     var app = builder.Build();
 

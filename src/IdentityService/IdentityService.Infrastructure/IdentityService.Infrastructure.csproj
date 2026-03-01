@@ -9,11 +9,6 @@
     <PackageReference Include="EFCore.NamingConventions" />
     <PackageReference Include="EntityFrameworkCore.Exceptions.PostgreSQL" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <!--      <ExcludeAssets>contentfiles</ExcludeAssets>-->
-    </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -21,8 +16,13 @@
     <PackageReference Include="Microsoft.Extensions.Configuration"/>
     <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions"/>
+    <PackageReference Include="Microsoft.OpenApi" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL"/>
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" />
     <PackageReference Include="Vogen" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Hybrid"/>
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis"/>
+    <PackageReference Include="AspNetCore.HealthChecks.Redis"/>
   </ItemGroup>
 
   <ItemGroup>

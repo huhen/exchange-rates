@@ -1,6 +1,9 @@
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using IdentityService.Infrastructure.Authorization;
 using IdentityService.UseCases.Abstractions.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -13,9 +16,6 @@ namespace IdentityService.Infrastructure.Authentication;
 
 public static class AuthenticationConfig
 {
-    private const string JwksEndpoin = "/.well-known/jwks";
-    private const string OpenIdEndpoin = "/.well-known/openid-configuration";
-
     internal static IServiceCollection AddAuthenticationConfig(this IServiceCollection services,
         IConfiguration configuration)
     {
@@ -45,39 +45,71 @@ public static class AuthenticationConfig
                 };
                 o.ConfigurationManager =
                     new ConfigurationManager<OpenIdConnectConfiguration>(
-                        jwtTokenOptions.JwksEndpoint,
+                        jwtTokenOptions.OpenIdConfigurationUri,
                         new OpenIdConnectConfigurationRetriever(),
                         new HttpDocumentRetriever { RequireHttps = false });
             });
 
         services.AddHttpContextAccessor();
-        // services.AddScoped<IUserContext, UserContext>();
+        services.AddScoped<IUserContext, UserContext>();
         services.AddSingleton<IPasswordHasher, PasswordHasher>();
         services.AddSingleton<ITokenProvider, TokenProvider>();
 
         services.AddSingleton<OpenIdConfigurationResponse>(provider => new OpenIdConfigurationResponse
         {
             Issuer = jwtTokenOptions.Issuer,
-            JwksUri = jwtTokenOptions.Issuer + JwksEndpoin,
+            JwksUri = jwtTokenOptions.JwksUri,
             SubjectTypesSupported = ["public"],
             ResponseTypesSupported = ["token"],
-            ClaimsSupported = [], // ["sub", "aud", "exp", "nbf", "iat", "iss", "act"],
+            ClaimsSupported = ["sub", "aud", "exp", "nbf", "iat", "iss", "act"],
             IdTokenSigningAlgValuesSupported = ["ES256"],
-            ScopesSupported = [] // ["openid"]
+            ScopesSupported = ["openid"]
         });
+
+        services.AddJwksResponse(jwtTokenOptions);
+
         return services;
     }
 
     private static IServiceCollection AddAuthorizationInternal(this IServiceCollection services)
     {
         services.AddAuthorization();
+        services.AddTransient<IAuthorizationHandler, PermissionAuthorizationHandler>();
+        services.AddTransient<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
 
-        //     services.AddScoped<PermissionProvider>();
-        //
-        //     services.AddTransient<IAuthorizationHandler, PermissionAuthorizationHandler>();
-        //
-        //     services.AddTransient<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
+        return services;
+    }
 
+    private static IServiceCollection AddJwksResponse(this IServiceCollection services, JwtTokenOptions jwtTokenOptions)
+    {
+        using var certificate = new X509Certificate2(
+            jwtTokenOptions.CertificatePath,
+            jwtTokenOptions.CertificatePassword);
+
+        var thumbprint = certificate.Thumbprint;
+
+        using var ecdsa = certificate.GetECDsaPublicKey();
+        var parameters = ecdsa!.ExportParameters(false);
+
+        var x = Base64UrlEncoder.Encode(parameters.Q.X);
+        var y = Base64UrlEncoder.Encode(parameters.Q.Y);
+
+        services.AddSingleton<JwksResponse>(provider => new JwksResponse
+        {
+            Keys =
+            [
+                new JwksKeyDto
+                {
+                    Kty = "EC",
+                    Alg = "ES256",
+                    Crv = "P-256",
+                    Use = "sig",
+                    Kid = thumbprint,
+                    X = x,
+                    Y = y
+                }
+            ]
+        });
         return services;
     }
 
@@ -86,7 +118,10 @@ public static class AuthenticationConfig
         app.UseAuthentication();
         app.UseAuthorization();
 
-        app.MapGet(OpenIdEndpoin, OpenIdConfigurationEndpoint);
+        app.MapGet(JwtTokenOptions.OpenIdConfigurationEndpoint, OpenIdConfigurationEndpoint)
+            .ExcludeFromDescription();
+        app.MapGet(JwtTokenOptions.JwksEndpoint, JwksEndpoint)
+            .ExcludeFromDescription();
 
         return app;
     }
@@ -96,7 +131,23 @@ public static class AuthenticationConfig
         return TypedResults.Ok(metadata);
     }
 
-//{"issuer":"https://github.com","jwks_uri":"https://github.com/login/oauth/.well-known/jwks","subject_types_supported":["public"],"response_types_supported":["code","id_token"],"claims_supported":["sub","aud","exp","nbf","iat","iss","act"],"id_token_signing_alg_values_supported":["RS256"],"scopes_supported":["openid"]}
+    private static Ok<JwksResponse> JwksEndpoint(JwksResponse metadata)
+    {
+        return TypedResults.Ok(metadata);
+    }
+
+// {
+//     "keys": [
+//         {
+//             "kty": "EC",
+//             "alg": "ES256",
+//             "use": "sig",
+//             "kid": "cert.Thumbprint",
+//             "x": "Base64UrlEncoder.Encode(parameters.Q.X)",
+//             "y": "Base64UrlEncoder.Encode(parameters.Q.Y)",
+//         }
+//     ]
+// }
 
     //app.MapGet("/.well-known/jwks.json", (IConfiguration config) =>
     // {

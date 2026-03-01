@@ -1,4 +1,6 @@
-namespace IdentityService.Api.Configurations;
+using Microsoft.Extensions.Configuration;
+
+namespace IdentityService.Infrastructure.Caching;
 
 public static class HybridCacheConfig
 {

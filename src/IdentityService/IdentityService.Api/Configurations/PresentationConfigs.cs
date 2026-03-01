@@ -1,6 +1,10 @@
 using System.Reflection;
 using IdentityService.Api.Endpoints;
+using IdentityService.Infrastructure.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.OpenApi;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace IdentityService.Api.Configurations;
 
@@ -10,7 +14,22 @@ public static class PresentationConfigs
         IConfiguration configuration, Assembly assembly)
     {
         services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen();
+
+        services.AddSwaggerGen(options =>
+        {
+            options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme,
+                new OpenApiSecurityScheme
+                {
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Name = "Authorization",
+                    Description = "JWT Bearer token"
+                });
+            
+            options.OperationFilter<SecurityRequirementsOperationFilter>(JwtBearerDefaults.AuthenticationScheme);
+        });
 
         return services.AddEndpoints(assembly);
     }
@@ -43,5 +62,10 @@ public static class PresentationConfigs
         }
 
         return app;
+    }
+
+    public static RouteHandlerBuilder HasPermission(this RouteHandlerBuilder app, string permission)
+    {
+        return app.RequireAuthorization(permission);
     }
 }

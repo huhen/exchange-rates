@@ -1,6 +1,7 @@
 using IdentityService.Api.Pipelines;
 using IdentityService.Core.UserAggregate;
 using IdentityService.Infrastructure;
+using IdentityService.Infrastructure.Caching;
 using IdentityService.UseCases.Users.Register;
 
 namespace IdentityService.Api.Configurations;

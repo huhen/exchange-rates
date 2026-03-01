@@ -1,5 +1,6 @@
 using EntityFramework.Exceptions.PostgreSQL;
 using IdentityService.Infrastructure.Authentication;
+using IdentityService.Infrastructure.Caching;
 using IdentityService.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
@@ -12,7 +13,8 @@ public static class InfrastructureServiceExtensions
         this IServiceCollection services,
         IConfiguration configuration,
         ILogger logger,
-        string environmentName)
+        string environmentName,
+        string applicationName)
     {
         if (environmentName != "Testing")
         {
@@ -25,6 +27,8 @@ public static class InfrastructureServiceExtensions
         // }
 
         RegisterEfRepositories(services);
+        
+        services.AddHybridCacheConfig(configuration, applicationName);
 
         services.AddAuthenticationConfig(configuration);
 

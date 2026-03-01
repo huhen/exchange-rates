@@ -1,10 +1,9 @@
-using IdentityService.Api.Configurations;
 using IdentityService.UseCases;
+using Mediator;
 using Microsoft.Extensions.Caching.Hybrid;
-using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 
-namespace IdentityService.Api.Pipelines;
+namespace IdentityService.Infrastructure.Caching;
 
 public class CachingBehavior<TRequest, TResponse>(
     HybridCache cache,

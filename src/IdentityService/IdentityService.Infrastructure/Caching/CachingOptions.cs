@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Caching.Hybrid;
 
-namespace IdentityService.Api.Configurations;
+namespace IdentityService.Infrastructure.Caching;
 
 public class CachingOptions
 {
