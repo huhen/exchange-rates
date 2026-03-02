@@ -85,8 +85,8 @@ public static class VogenValidationHelper
     /// <param name="f3">Field name to associate with errors from <paramref name="r3"/>.</param>
     /// <param name="r4">Validation result for the fourth value object.</param>
     /// <param name="f4">Field name to associate with errors from <paramref name="r4"/>.</param>
-    /// <returns>A ValidationProblem mapped by field names when any input failed, or `null` if all inputs succeeded.</returns>
-    public static IResult? Validate<T1, T2, T3, T4>(
+    /// <returns>A <see cref="ValidationProblem"/> containing collected error messages keyed by the provided field names, or <c>null</c> if all inputs succeeded.</returns>
+    public static ValidationProblem? Validate<T1, T2, T3, T4>(
         ValueObjectOrError<T1> r1, string f1,
         ValueObjectOrError<T2> r2, string f2,
         ValueObjectOrError<T3> r3, string f3,

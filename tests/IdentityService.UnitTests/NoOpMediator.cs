@@ -2,11 +2,9 @@ namespace IdentityService.UnitTests;
 
 public class NoOpMediator : IMediator
 {
-    // public async Task<IAsyncEnumerable<TResponse>> CreateStream<TResponse>(IStreamQuery<TResponse> query,
-    //     CancellationToken cancellationToken = default)
-    // {
-    //     await Task.Delay(1);
-    //     return AsyncEnumerable.Empty<TResponse>();
+    private static IAsyncEnumerable<TResponse> EmptyStream<TResponse>() =>
+        AsyncEnumerable.Empty<TResponse>();
+
     /// <summary>
     /// Creates an empty asynchronous stream for the specified stream request.
     /// </summary>
@@ -14,7 +12,7 @@ public class NoOpMediator : IMediator
     public IAsyncEnumerable<TResponse> CreateStream<TResponse>(IStreamRequest<TResponse> request,
         CancellationToken cancellationToken = default)
     {
-        return AsyncEnumerable.Empty<TResponse>();
+        return EmptyStream<TResponse>();
     }
 
     /// <summary>
@@ -24,7 +22,7 @@ public class NoOpMediator : IMediator
     public IAsyncEnumerable<TResponse> CreateStream<TResponse>(IStreamCommand<TResponse> command,
         CancellationToken cancellationToken = default)
     {
-        return AsyncEnumerable.Empty<TResponse>();
+        return EmptyStream<TResponse>();
     }
 
     /// <summary>
@@ -35,7 +33,7 @@ public class NoOpMediator : IMediator
     /// <returns>An empty <see cref="IAsyncEnumerable{T}"/> of <see cref="object"/> (yields no elements).</returns>
     public IAsyncEnumerable<object?> CreateStream(object message, CancellationToken cancellationToken = default)
     {
-        return AsyncEnumerable.Empty<object?>();
+        return EmptyStream<object?>();
     }
 
     /// <summary>

@@ -25,14 +25,13 @@ public static class InfrastructureServiceExtensions
         if (environmentName != "Testing")
         {
             AddDbContextWithNpgsql(services, configuration);
+            RegisterEfRepositories(services);
             // services.AddScoped<IListUsersQueryService, ListUsersQueryService>();
         }
         // else
         // {
         //     services.AddScoped<IListUsersQueryService, FakeListUsersQueryService>();
         // }
-
-        RegisterEfRepositories(services);
 
         services.AddHybridCacheConfig(configuration, applicationName);
 
@@ -53,7 +52,7 @@ public static class InfrastructureServiceExtensions
         var connectionString = configuration.GetConnectionString("Database");
 
         if (string.IsNullOrWhiteSpace(connectionString))
-            return;
+            throw new InvalidOperationException("Connection string 'Database' is required.");
 
         services.AddScoped<EventDispatchInterceptor>();
         services.AddScoped<IDomainEventDispatcher, MediatorDomainEventDispatcher>();

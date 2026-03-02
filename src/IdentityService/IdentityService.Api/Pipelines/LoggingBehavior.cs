@@ -30,7 +30,13 @@ public class LoggingBehavior<TRequest, TResponse>(ILogger<LoggingBehavior<TReque
             IList<PropertyInfo> props = new List<PropertyInfo>(myType.GetProperties());
             foreach (PropertyInfo prop in props)
             {
-                object? propValue = prop.GetValue(request, null);
+                var isSensitive =
+                    prop.Name.Contains("password", StringComparison.OrdinalIgnoreCase) ||
+                    prop.Name.Contains("token", StringComparison.OrdinalIgnoreCase) ||
+                    prop.Name.Contains("secret", StringComparison.OrdinalIgnoreCase) ||
+                    prop.Name.Contains("hash", StringComparison.OrdinalIgnoreCase);
+
+                object? propValue = isSensitive ? "***REDACTED***" : prop.GetValue(request, null);
                 logger.LogTrace("Property {Property} : {@Value}", prop.Name, propValue);
             }
         }
@@ -41,10 +47,7 @@ public class LoggingBehavior<TRequest, TResponse>(ILogger<LoggingBehavior<TReque
 
         var elapsedMilliseconds = Stopwatch.GetElapsedTime(startingTimestamp).TotalMilliseconds;
 
-        logger.LogInformation("Handled {RequestName} with {Response} in {ms:F3} ms",
-            typeof(TRequest).Name,
-            response,
-            elapsedMilliseconds);
+        logger.LogInformation("Handled {RequestName} in {ms:F3} ms", typeof(TRequest).Name, elapsedMilliseconds);
 
         return response;
     }

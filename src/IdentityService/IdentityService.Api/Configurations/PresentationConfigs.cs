@@ -15,8 +15,7 @@ public static class PresentationConfigs
     /// </summary>
     /// <param name="assembly">The assembly to scan for concrete IEndpoint implementations to register with the service collection.</param>
     /// <returns>The updated <see cref="IServiceCollection"/> with Swagger setup and endpoint services added.</returns>
-    internal static IServiceCollection AddPresentationConfig(this IServiceCollection services,
-        IConfiguration configuration, Assembly assembly)
+    internal static IServiceCollection AddPresentationConfig(this IServiceCollection services, Assembly assembly)
     {
         services.AddEndpointsApiExplorer();
 

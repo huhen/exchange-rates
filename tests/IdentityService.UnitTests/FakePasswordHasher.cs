@@ -5,6 +5,8 @@ namespace IdentityService.UnitTests;
 
 public class FakePasswordHasher : IPasswordHasher
 {
+    private const string Prefix = "HASHED_";
+    
     /// <summary>
     /// Creates a deterministic test hash for the specified user password by prefixing its value with "HASHED_".
     /// </summary>
@@ -12,7 +14,7 @@ public class FakePasswordHasher : IPasswordHasher
     /// <returns>A UserPasswordHash whose Value equals "HASHED_" followed by the original password value.</returns>
     public UserPasswordHash Hash(UserPassword password)
     {
-        return UserPasswordHash.From($"HASHED_{password.Value}");
+        return UserPasswordHash.From($"{Prefix}{password.Value}");
     }
 
     /// <summary>
@@ -23,6 +25,6 @@ public class FakePasswordHasher : IPasswordHasher
     /// <returns>`true` if <paramref name="passwordHash"/> equals "HASHED_" concatenated with <paramref name="password"/>.Value; `false` otherwise.</returns>
     public bool Verify(UserPassword password, UserPasswordHash passwordHash)
     {
-        return passwordHash.Value == $"HASHED_{password.Value}";
+        return passwordHash.Value == $"{Prefix}{password.Value}";
     }
 }

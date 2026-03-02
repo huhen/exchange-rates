@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
 
@@ -6,7 +7,7 @@ namespace IdentityService.Infrastructure.Authorization;
 internal sealed class PermissionAuthorizationPolicyProvider(IOptions<AuthorizationOptions> options)
     : DefaultAuthorizationPolicyProvider(options)
 {
-    private readonly AuthorizationOptions _authorizationOptions = options.Value;
+    private static readonly ConcurrentDictionary<string, AuthorizationPolicy> _policyCache = new();
 
     /// <summary>
     /// Resolves an authorization policy by name, creating and registering a permission-based policy if none exists.
@@ -24,12 +25,9 @@ internal sealed class PermissionAuthorizationPolicyProvider(IOptions<Authorizati
             return policy;
         }
 
-        AuthorizationPolicy permissionPolicy = new AuthorizationPolicyBuilder()
-            .AddRequirements(new PermissionRequirement(policyName))
-            .Build();
-
-        _authorizationOptions.AddPolicy(policyName, permissionPolicy);
-
-        return permissionPolicy;
+        return _policyCache.GetOrAdd(policyName, name =>
+            new AuthorizationPolicyBuilder()
+                .AddRequirements(new PermissionRequirement(name))
+                .Build());
     }
 }

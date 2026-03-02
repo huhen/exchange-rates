@@ -28,7 +28,7 @@ public partial struct UserPassword
         if (input is { Length: < MinLength })
             AddError($"{name} must contain {MinLength} or more characters");
 
-        if (!isNull && !ValidNameRegex().IsMatch(input))
+        if (!isNull && !ValidPasswordRegex().IsMatch(input))
             AddError($"{name} must contain only printable ASCII characters (letters, digits, symbols, and spaces)");
 
         return result ?? Validation.Ok;
@@ -45,5 +45,5 @@ public partial struct UserPassword
     /// </summary>
     /// <returns>A <see cref="Regex"/> that matches one or more printable ASCII characters (space through tilde) anchored to the start and end of the string.</returns>
     [GeneratedRegex(@"^[\x20-\x7E]+$")]
-    private static partial Regex ValidNameRegex();
+    private static partial Regex ValidPasswordRegex();
 }

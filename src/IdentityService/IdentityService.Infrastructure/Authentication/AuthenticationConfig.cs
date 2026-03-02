@@ -43,19 +43,22 @@ public static class AuthenticationConfig
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, o =>
             {
-                o.RequireHttpsMetadata = false;
+                o.RequireHttpsMetadata = jwtTokenOptions.RequireHttpsMetadata;
                 o.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = jwtTokenOptions.Issuer,
                     ValidAudience = jwtTokenOptions.Audience,
-                    ClockSkew = TimeSpan.Zero
+                    ClockSkew = TimeSpan.Zero,
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true
                 };
                 o.ConfigurationManager =
                     new ConfigurationManager<OpenIdConnectConfiguration>(
                         jwtTokenOptions.OpenIdConfigurationUri,
                         new OpenIdConnectConfigurationRetriever(),
-                        new HttpDocumentRetriever { RequireHttps = false });
+                        new HttpDocumentRetriever { RequireHttps = jwtTokenOptions.RequireHttpsMetadata });
             });
 
         services.AddHttpContextAccessor();

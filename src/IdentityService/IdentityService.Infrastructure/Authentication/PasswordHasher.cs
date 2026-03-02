@@ -41,7 +41,8 @@ public sealed class PasswordHasher(ILogger<PasswordHasher> logger) : IPasswordHa
     public bool Verify(UserPassword password, UserPasswordHash passwordHash)
     {
         Span<byte> hashedPasswordBytes = stackalloc byte[SaltSize + KeySize];
-        if (!Convert.TryFromBase64String(passwordHash.Value, hashedPasswordBytes, out _))
+        if (!Convert.TryFromBase64String(passwordHash.Value, hashedPasswordBytes, out var bytesWritten)
+            || bytesWritten != hashedPasswordBytes.Length)
         {
             logger.LogError("Invalid password hash format");
             return false;

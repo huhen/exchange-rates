@@ -47,7 +47,7 @@ try
             builder.Environment.ApplicationName)
         .AddMediatorSourceGen(appLogger);
 
-    builder.Services.AddPresentationConfig(builder.Configuration, Assembly.GetExecutingAssembly());
+    builder.Services.AddPresentationConfig(Assembly.GetExecutingAssembly());
 
 
     var app = builder.Build();

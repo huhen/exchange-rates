@@ -11,8 +11,6 @@ namespace IdentityService.Infrastructure.Authentication;
 
 public sealed class TokenProvider : ITokenProvider
 {
-    private const string JwtRoleClaimName = "role";
-
     private readonly JwtTokenOptions _settings;
     private readonly SigningCredentials _credentials;
     private readonly JsonWebTokenHandler _handler;
@@ -63,7 +61,7 @@ public sealed class TokenProvider : ITokenProvider
             [
                 new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRoleClaimName, Permissions.UsersAccess)
+                new Claim(Permissions.JwtRoleClaimName, Permissions.UsersAccess)
             ]),
             IssuedAt = now,
             Expires = now.AddMinutes(_settings.ExpirationInMinutes),

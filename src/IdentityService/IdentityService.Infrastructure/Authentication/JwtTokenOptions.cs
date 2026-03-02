@@ -14,4 +14,5 @@ public class JwtTokenOptions
     public string Issuer { get; set; } = "http://identity-service";
     public string OpenIdConfigurationUri { get; set; } = "http://identity-service:5000" + OpenIdConfigurationEndpoint;
     public string JwksUri { get; set; } = "http://identity-service:5000" + JwksEndpoint;
+    public bool RequireHttpsMetadata { get; set; } = false;
 }
