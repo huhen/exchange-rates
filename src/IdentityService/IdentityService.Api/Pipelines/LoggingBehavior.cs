@@ -27,8 +27,7 @@ public class LoggingBehavior<TRequest, TResponse>(ILogger<LoggingBehavior<TReque
         if (logger.IsEnabled(LogLevel.Trace))
         {
             Type myType = request.GetType();
-            IList<PropertyInfo> props = new List<PropertyInfo>(myType.GetProperties());
-            foreach (PropertyInfo prop in props)
+            foreach (PropertyInfo prop in myType.GetProperties())
             {
                 var isSensitive =
                     prop.Name.Contains("password", StringComparison.OrdinalIgnoreCase) ||

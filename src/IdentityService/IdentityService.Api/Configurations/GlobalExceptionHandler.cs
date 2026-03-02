@@ -19,6 +19,12 @@ internal sealed class GlobalExceptionHandler(
     {
         logger.LogError(exception, "Unhandled exception occurred");
 
+        if (httpContext.Response.HasStarted)
+        {
+            logger.LogWarning("Response already started; global exception handler skipped.");
+            return false;
+        }
+        
         var problemDetails = new ProblemDetails
         {
             Type = "https://tools.ietf.org/html/rfc9110#section-15.6.1",

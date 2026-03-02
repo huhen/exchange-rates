@@ -9,7 +9,8 @@ public class MediatorDomainEventDispatcher(
     /// Publishes each domain event from the provided entities and clears those events from each entity after capturing them.
     /// </summary>
     /// <param name="entitiesWithEvents">A collection of entities to process; for each entity that implements <see cref="IHasDomainEvents"/>, its domain events are published and then cleared.</param>
-    public async Task DispatchAndClearEvents(IEnumerable<IHasDomainEvents> entitiesWithEvents)
+    /// <param name="cancellationToken">CancellationToken</param>
+    public async Task DispatchAndClearEvents(IEnumerable<IHasDomainEvents> entitiesWithEvents, CancellationToken cancellationToken)
     {
         foreach (IHasDomainEvents entity in entitiesWithEvents)
         {
@@ -19,7 +20,7 @@ public class MediatorDomainEventDispatcher(
                 hasDomainEvents.ClearDomainEvents();
 
                 foreach (var domainEvent in events)
-                    await mediator.Publish(domainEvent).ConfigureAwait(false);
+                    await mediator.Publish(domainEvent, cancellationToken).ConfigureAwait(false);
             }
             else
             {

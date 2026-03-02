@@ -18,7 +18,7 @@ internal sealed class PermissionAuthorizationHandler
     {
         if (context.User is { Identity.IsAuthenticated: true })
         {
-            if (context.User.HasClaim(Permissions.JwtRoleClaimName, requirement.Permission))
+            if (context.User.IsInRole(requirement.Permission))
             {
                 context.Succeed(requirement);
             }

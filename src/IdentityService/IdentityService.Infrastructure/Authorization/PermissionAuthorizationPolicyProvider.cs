@@ -7,7 +7,7 @@ namespace IdentityService.Infrastructure.Authorization;
 internal sealed class PermissionAuthorizationPolicyProvider(IOptions<AuthorizationOptions> options)
     : DefaultAuthorizationPolicyProvider(options)
 {
-    private static readonly ConcurrentDictionary<string, AuthorizationPolicy> _policyCache = new();
+    private readonly ConcurrentDictionary<string, AuthorizationPolicy> _policyCache = new();
 
     /// <summary>
     /// Resolves an authorization policy by name, creating and registering a permission-based policy if none exists.

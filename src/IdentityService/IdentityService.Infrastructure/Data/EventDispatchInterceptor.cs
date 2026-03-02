@@ -30,7 +30,7 @@ public class EventDispatchInterceptor(IDomainEventDispatcher domainEventDispatch
             .ToArray();
 
         // Dispatch and clear domain events
-        await domainEventDispatcher.DispatchAndClearEvents(entitiesWithEvents);
+        await domainEventDispatcher.DispatchAndClearEvents(entitiesWithEvents, cancellationToken);
 
         return await base.SavedChangesAsync(eventData, result, cancellationToken);
     }

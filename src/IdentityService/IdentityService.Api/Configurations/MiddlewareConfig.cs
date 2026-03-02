@@ -14,9 +14,10 @@ public static class MiddlewareConfig
     public static async Task<IApplicationBuilder> UseAppMiddleware(this WebApplication app)
     {
         app.UseSerilogRequestLogging();
+        app.UseExceptionHandler();
 
         app.MapAuthentications();
-        
+
         app.MapEndpoints();
 
         if (app.Environment.IsDevelopment())
@@ -24,9 +25,6 @@ public static class MiddlewareConfig
             app.UseSwagger();
             app.UseSwaggerUI();
         }
-
-        // Use global exception handler in both dev and prod
-        app.UseExceptionHandler();
 
         if (app.Environment.IsDevelopment())
         {
