@@ -10,15 +10,14 @@ internal static class ClaimsPrincipalExtensions
     /// Retrieves the user's identifier from the NameIdentifier claim of the provided principal.
     /// </summary>
     /// <param name="principal">The claims principal containing authentication claims; may be null.</param>
-    /// <returns>The UserId represented by the NameIdentifier claim.</returns>
-    /// <exception cref="System.ApplicationException">Thrown when the NameIdentifier claim is missing or is not a valid GUID.</exception>
-    public static UserId GetUserId(this ClaimsPrincipal? principal)
+    /// <returns>The UserId represented by the NameIdentifier claim if is present and parsable, `null` otherwise.</returns>
+    public static UserId? GetUserId(this ClaimsPrincipal? principal)
     {
         string? userId = principal?.FindFirstValue(ClaimTypes.NameIdentifier);
 
         return Guid.TryParse(userId, out Guid parsedUserId)
             ? UserId.From(parsedUserId)
-            : throw new ApplicationException("User id is unavailable");
+            : null;
     }
 
     /// <summary>

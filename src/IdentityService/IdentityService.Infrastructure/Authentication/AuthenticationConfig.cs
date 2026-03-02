@@ -100,14 +100,19 @@ public static class AuthenticationConfig
     /// <returns>The same <see cref="IServiceCollection"/> to allow fluent chaining.</returns>
     private static IServiceCollection AddJwksResponse(this IServiceCollection services, JwtTokenOptions jwtTokenOptions)
     {
+        if (string.IsNullOrWhiteSpace(jwtTokenOptions.CertificatePath))
+            throw new InvalidOperationException("JWT certificate path is not configured.");
+
         using var certificate = new X509Certificate2(
             jwtTokenOptions.CertificatePath,
             jwtTokenOptions.CertificatePassword);
 
         var thumbprint = certificate.Thumbprint;
 
-        using var ecdsa = certificate.GetECDsaPublicKey();
-        var parameters = ecdsa!.ExportParameters(false);
+        using var ecdsa = certificate.GetECDsaPublicKey()
+                          ?? throw new InvalidOperationException("JWT certificate must contain an ECDSA public key.");
+
+        var parameters = ecdsa.ExportParameters(false);
 
         var x = Base64UrlEncoder.Encode(parameters.Q.X);
         var y = Base64UrlEncoder.Encode(parameters.Q.Y);

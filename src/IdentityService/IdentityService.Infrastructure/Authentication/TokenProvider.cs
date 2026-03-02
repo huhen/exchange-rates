@@ -25,11 +25,18 @@ public sealed class TokenProvider : ITokenProvider
     {
         _settings = options.Value;
 
+        if (string.IsNullOrWhiteSpace(_settings.CertificatePath))
+            throw new InvalidOperationException("JWT certificate path is not configured.");
+        if (_settings.ExpirationInMinutes <= 0)
+            throw new InvalidOperationException("JWT expiration must be greater than zero.");
+
         using var certificate = new X509Certificate2(
             _settings.CertificatePath,
             _settings.CertificatePassword);
 
-        var ecdsa = certificate.GetECDsaPrivateKey();
+        var ecdsa = certificate.GetECDsaPrivateKey()
+                    ?? throw new InvalidOperationException("JWT certificate must contain an ECDSA private key.");
+
         var securityKey = new ECDsaSecurityKey(ecdsa)
         {
             KeyId = certificate.Thumbprint,

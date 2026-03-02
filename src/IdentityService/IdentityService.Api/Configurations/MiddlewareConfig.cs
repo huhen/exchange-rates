@@ -15,6 +15,8 @@ public static class MiddlewareConfig
     {
         app.UseSerilogRequestLogging();
 
+        app.MapAuthentications();
+        
         app.MapEndpoints();
 
         if (app.Environment.IsDevelopment())
@@ -25,8 +27,6 @@ public static class MiddlewareConfig
 
         // Use global exception handler in both dev and prod
         app.UseExceptionHandler();
-
-        app.MapAuthentications();
 
         if (app.Environment.IsDevelopment())
         {

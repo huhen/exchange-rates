@@ -43,7 +43,7 @@ public sealed class PasswordHasher(ILogger<PasswordHasher> logger) : IPasswordHa
         Span<byte> hashedPasswordBytes = stackalloc byte[SaltSize + KeySize];
         if (!Convert.TryFromBase64String(passwordHash.Value, hashedPasswordBytes, out _))
         {
-            logger.LogError("Invalid password hash: {PasswordHash}", passwordHash);
+            logger.LogError("Invalid password hash format");
             return false;
         }
 
