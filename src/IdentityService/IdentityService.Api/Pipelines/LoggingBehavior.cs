@@ -35,7 +35,23 @@ public class LoggingBehavior<TRequest, TResponse>(ILogger<LoggingBehavior<TReque
                     prop.Name.Contains("secret", StringComparison.OrdinalIgnoreCase) ||
                     prop.Name.Contains("hash", StringComparison.OrdinalIgnoreCase);
 
-                object? propValue = isSensitive ? "***REDACTED***" : prop.GetValue(request, null);
+                object? propValue;
+                if (isSensitive)
+                {
+                    propValue = "***REDACTED***";
+                }
+                else
+                {
+                    try
+                    {
+                        propValue = prop.GetValue(request, null);
+                    }
+                    catch (Exception)
+                    {
+                        propValue = "***UNAVAILABLE***";
+                    }
+                }
+
                 logger.LogTrace("Property {Property} : {@Value}", prop.Name, propValue);
             }
         }

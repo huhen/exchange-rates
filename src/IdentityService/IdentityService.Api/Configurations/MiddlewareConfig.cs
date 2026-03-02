@@ -24,10 +24,7 @@ public static class MiddlewareConfig
         {
             app.UseSwagger();
             app.UseSwaggerUI();
-        }
 
-        if (app.Environment.IsDevelopment())
-        {
             await SeedDatabase(app);
         }
 
@@ -54,7 +51,7 @@ public static class MiddlewareConfig
         catch (Exception ex)
         {
             var logger = services.GetRequiredService<ILogger<Program>>();
-            logger.LogError(ex, "An error occurred seeding the DB. {ExceptionMessage}", ex.Message);
+            logger.LogError(ex, "An error occurred seeding the DB.");
         }
     }
 }
