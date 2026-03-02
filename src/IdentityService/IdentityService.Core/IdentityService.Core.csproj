@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Ardalis.Specification"/>
+    <PackageReference Include="CSharpFunctionalExtensions"/>
+    <PackageReference Include="Mediator.Abstractions"/>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions"/>
+    <PackageReference Include="Vogen"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\ExchangeRates.SharedKernel\ExchangeRates.SharedKernel.csproj"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Interfaces\"/>
+    <Folder Include="Services\"/>
+    <Folder Include="UserAggregate\Handlers\"/>
+  </ItemGroup>
+
+</Project>

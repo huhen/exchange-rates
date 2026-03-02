@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Ardalis.Specification.EntityFrameworkCore"/>
+    <PackageReference Include="AspNetCore.HealthChecks.NpgSql"/>
+    <PackageReference Include="EFCore.NamingConventions"/>
+    <PackageReference Include="EntityFrameworkCore.Exceptions.PostgreSQL"/>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration"/>
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks"/>
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions"/>
+    <PackageReference Include="Microsoft.OpenApi"/>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL"/>
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen"/>
+    <PackageReference Include="Vogen"/>
+    <PackageReference Include="Microsoft.Extensions.Caching.Hybrid"/>
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis"/>
+    <PackageReference Include="AspNetCore.HealthChecks.Redis"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IdentityService.Core\IdentityService.Core.csproj"/>
+    <ProjectReference Include="..\IdentityService.UseCases\IdentityService.UseCases.csproj"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\Queries\"/>
+  </ItemGroup>
+
+</Project>
