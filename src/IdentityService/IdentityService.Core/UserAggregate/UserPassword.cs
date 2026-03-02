@@ -14,7 +14,7 @@ public partial struct UserPassword
     private static Validation Validate(string input)
     {
         const string name = nameof(UserPassword);
-        
+
         Validation? result = null;
 
         var isNull = string.IsNullOrWhiteSpace(input);

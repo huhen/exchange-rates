@@ -7,10 +7,10 @@ namespace IdentityService.Infrastructure.Data;
 public class AppDbContext : DbContext
 {
     /// <summary>
-/// Initializes a new instance of <see cref="AppDbContext"/> with the specified options.
-/// </summary>
-/// <param name="options">The options used to configure the database context.</param>
-public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+    /// Initializes a new instance of <see cref="AppDbContext"/> with the specified options.
+    /// </summary>
+    /// <param name="options">The options used to configure the database context.</param>
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
     public DbSet<User> Users => Set<User>();
 

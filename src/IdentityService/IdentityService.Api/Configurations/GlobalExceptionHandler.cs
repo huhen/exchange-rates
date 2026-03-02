@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace IdentityService.Api.Configurations;
 
 internal sealed class GlobalExceptionHandler(
-    IHostEnvironment env, 
+    IHostEnvironment env,
     ILogger<GlobalExceptionHandler> logger) : IExceptionHandler
 {
     /// <summary>
@@ -14,10 +14,11 @@ internal sealed class GlobalExceptionHandler(
     /// <param name="exception">The exception to handle and include (development only) in the response detail.</param>
     /// <param name="cancellationToken">Cancellation token used when writing the response.</param>
     /// <returns>`true` indicating the exception was handled.</returns>
-    public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
+    public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception,
+        CancellationToken cancellationToken)
     {
         logger.LogError(exception, "Unhandled exception occurred");
-        
+
         var problemDetails = new ProblemDetails
         {
             Type = "https://tools.ietf.org/html/rfc9110#section-15.6.1",
@@ -29,9 +30,8 @@ internal sealed class GlobalExceptionHandler(
 
         httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
         httpContext.Response.ContentType = "application/json";
-    
+
         await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
         return true;
     }
 }
-

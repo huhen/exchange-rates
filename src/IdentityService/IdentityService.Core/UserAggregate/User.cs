@@ -16,7 +16,7 @@ public sealed class User : EntityBase<User, UserId>, IAggregateRoot
     {
         Name = name;
         PasswordHash = passwordHash;
-        
+
         RegisterDomainEvent(new UserRegisteredEvent(this));
     }
 }

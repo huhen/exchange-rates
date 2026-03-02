@@ -11,7 +11,6 @@ public class NoOpMediator : IMediator
     /// Creates an empty asynchronous stream for the specified stream request.
     /// </summary>
     /// <returns>An empty IAsyncEnumerable&lt;TResponse&gt;.</returns>
-
     public IAsyncEnumerable<TResponse> CreateStream<TResponse>(IStreamRequest<TResponse> request,
         CancellationToken cancellationToken = default)
     {

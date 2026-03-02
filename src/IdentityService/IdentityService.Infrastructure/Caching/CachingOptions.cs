@@ -13,6 +13,6 @@ public class CachingOptions
     {
         Expiration = TimeSpan.FromMinutes(30), LocalCacheExpiration = TimeSpan.FromMinutes(1)
     };
-    
+
     public Dictionary<string, HybridCacheEntryOptions?>? CacheProfiles { get; set; }
 }

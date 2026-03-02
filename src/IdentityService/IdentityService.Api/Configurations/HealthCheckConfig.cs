@@ -3,18 +3,19 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace IdentityService.Api.Configurations;
 
-internal static  class HealthCheckConfig
+internal static class HealthCheckConfig
 {
     internal const string HealthEndpointPath = "/health";
     internal const string AlivenessEndpointPath = "/alive";
-    
+
     /// <summary>
     /// Registers a default set of health checks on the provided host builder.
     /// </summary>
     /// <typeparam name="TBuilder">The host builder type that implements <see cref="IHostApplicationBuilder"/>.</typeparam>
     /// <param name="builder">The host application builder to configure with default health checks.</param>
     /// <returns>The same builder instance to allow fluent chaining.</returns>
-    internal static TBuilder AddDefaultHealthChecks<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
+    internal static TBuilder AddDefaultHealthChecks<TBuilder>(this TBuilder builder)
+        where TBuilder : IHostApplicationBuilder
     {
         builder.Services.AddHealthChecks()
             // Add a default liveness check to ensure app is responsive
@@ -43,10 +44,8 @@ internal static  class HealthCheckConfig
             app.MapHealthChecks(HealthEndpointPath);
 
             // Only health checks tagged with the "live" tag must pass for app to be considered alive
-            app.MapHealthChecks(AlivenessEndpointPath, new HealthCheckOptions
-            {
-                Predicate = r => r.Tags.Contains("live")
-            });
+            app.MapHealthChecks(AlivenessEndpointPath,
+                new HealthCheckOptions { Predicate = r => r.Tags.Contains("live") });
         }
 
         return app;

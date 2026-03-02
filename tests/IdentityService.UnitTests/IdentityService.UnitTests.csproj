@@ -15,36 +15,36 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Mediator.Abstractions" />
+    <PackageReference Include="Mediator.Abstractions"/>
     <PackageReference Include="Mediator.SourceGenerator">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="NSubstitute" />
+    <PackageReference Include="NSubstitute"/>
     <PackageReference Include="NSubstitute.Analyzers.CSharp">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="ReportGenerator" />
-    <PackageReference Include="Shouldly" />
-    <PackageReference Include="System.Linq.Async" />
+    <PackageReference Include="ReportGenerator"/>
+    <PackageReference Include="Shouldly"/>
+    <PackageReference Include="System.Linq.Async"/>
     <PackageReference Include="xunit.v3"/>
     <PackageReference Include="Microsoft.NET.Test.Sdk"/>
     <PackageReference Include="xunit.runner.visualstudio"/>
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Core\Services\" />
-    <Folder Include="Core\UserAggregate\Events\" />
-    <Folder Include="Core\UserAggregate\Specifications\" />
-    <Folder Include="UseCases\Users\" />
-    <Folder Include="UseCases\Users\Register\" />
-    <Folder Include="UseCases\Users\ValidateCredentials\" />
+    <Folder Include="Core\Services\"/>
+    <Folder Include="Core\UserAggregate\Events\"/>
+    <Folder Include="Core\UserAggregate\Specifications\"/>
+    <Folder Include="UseCases\Users\"/>
+    <Folder Include="UseCases\Users\Register\"/>
+    <Folder Include="UseCases\Users\ValidateCredentials\"/>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\IdentityService\IdentityService.Core\IdentityService.Core.csproj" />
-    <ProjectReference Include="..\..\src\IdentityService\IdentityService.UseCases\IdentityService.UseCases.csproj" />
+    <ProjectReference Include="..\..\src\IdentityService\IdentityService.Core\IdentityService.Core.csproj"/>
+    <ProjectReference Include="..\..\src\IdentityService\IdentityService.UseCases\IdentityService.UseCases.csproj"/>
   </ItemGroup>
 
 </Project>

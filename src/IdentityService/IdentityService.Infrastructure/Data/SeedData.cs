@@ -25,10 +25,10 @@ public static class SeedData
     private static async Task PopulateTestDataAsync(AppDbContext dbContext, IServiceProvider services)
     {
         var passwordHasher = services.GetRequiredService<IPasswordHasher>();
-        
+
         User user1 = new(UserName.From("admin"), passwordHasher.Hash(UserPassword.From("admin1234")));
         User user2 = new(UserName.From("test"), passwordHasher.Hash(UserPassword.From("test1234")));
-        
+
         dbContext.Users.AddRange([user1, user2]);
         await dbContext.SaveChangesAsync();
     }

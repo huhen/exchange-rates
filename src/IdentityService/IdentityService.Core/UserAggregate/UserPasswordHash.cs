@@ -13,7 +13,7 @@ public partial struct UserPasswordHash
     private static Validation Validate(string input)
     {
         const string name = nameof(UserPasswordHash);
-        
+
         Validation? result = null;
 
         var isNull = string.IsNullOrWhiteSpace(input);

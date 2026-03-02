@@ -33,7 +33,7 @@ public static class InfrastructureServiceExtensions
         // }
 
         RegisterEfRepositories(services);
-        
+
         services.AddHybridCacheConfig(configuration, applicationName);
 
         services.AddAuthenticationConfig(configuration);
@@ -54,7 +54,7 @@ public static class InfrastructureServiceExtensions
 
         if (string.IsNullOrWhiteSpace(connectionString))
             return;
-        
+
         services.AddScoped<EventDispatchInterceptor>();
         services.AddScoped<IDomainEventDispatcher, MediatorDomainEventDispatcher>();
 
@@ -76,7 +76,7 @@ public static class InfrastructureServiceExtensions
         //         .AddInterceptors(provider.GetRequiredService<EventDispatchInterceptor>())
         //         .UseExceptionProcessor();
         // });
-        
+
         services.AddHealthChecks().AddNpgSql(connectionString);
     }
 

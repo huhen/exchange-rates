@@ -32,7 +32,7 @@ public static class PresentationConfigs
                     Name = "Authorization",
                     Description = "JWT Bearer token"
                 });
-            
+
             options.OperationFilter<SecurityRequirementsOperationFilter>(JwtBearerDefaults.AuthenticationScheme);
         });
 

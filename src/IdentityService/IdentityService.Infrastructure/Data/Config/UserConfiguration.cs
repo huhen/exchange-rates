@@ -12,7 +12,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
     public void Configure(EntityTypeBuilder<User> builder)
     {
         builder.HasKey(entity => entity.Id);
-        
+
         builder.Property(entity => entity.Id)
             .HasDefaultValueSql("uuidv7()")
             .ValueGeneratedOnAdd();
@@ -24,7 +24,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(entity => entity.PasswordHash)
             .HasMaxLength(UserPasswordHash.MaxLength)
             .IsRequired();
-        
+
         builder.HasIndex(u => u.Name).IsUnique();
     }
 }

@@ -12,7 +12,7 @@ namespace IdentityService.Infrastructure.Authentication;
 public sealed class TokenProvider : ITokenProvider
 {
     private const string JwtRoleClaimName = "role";
-    
+
     private readonly JwtTokenOptions _settings;
     private readonly SigningCredentials _credentials;
     private readonly JsonWebTokenHandler _handler;
@@ -37,7 +37,7 @@ public sealed class TokenProvider : ITokenProvider
         };
 
         _credentials = new SigningCredentials(securityKey, SecurityAlgorithms.EcdsaSha256);
-        
+
         _handler = new JsonWebTokenHandler();
     }
 

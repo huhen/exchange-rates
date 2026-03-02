@@ -43,12 +43,12 @@ try
     builder.Services.AddOptionConfigs(appLogger);
 
     builder.Services.AddCoreServices(appLogger)
-        .AddInfrastructureServices(builder.Configuration, appLogger, environmentName, builder.Environment.ApplicationName)
+        .AddInfrastructureServices(builder.Configuration, appLogger, environmentName,
+            builder.Environment.ApplicationName)
         .AddMediatorSourceGen(appLogger);
 
     builder.Services.AddPresentationConfig(builder.Configuration, Assembly.GetExecutingAssembly());
 
-    
 
     var app = builder.Build();
 
@@ -61,7 +61,7 @@ try
 }
 catch (HostAbortedException hostAbortedException)
 {
-    Log.Information(hostAbortedException,"Aborted");
+    Log.Information(hostAbortedException, "Aborted");
     return 0;
 }
 catch (Exception ex)

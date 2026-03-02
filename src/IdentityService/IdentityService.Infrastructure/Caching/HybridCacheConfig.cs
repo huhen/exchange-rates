@@ -13,7 +13,7 @@ public static class HybridCacheConfig
         IConfiguration configuration, string instanceName)
     {
         services.Configure<CachingOptions>(configuration.GetSection(CachingOptions.SectionName));
-        
+
         var cachingOptions = new CachingOptions();
         configuration
             .GetSection(CachingOptions.SectionName)
@@ -28,7 +28,7 @@ public static class HybridCacheConfig
                 options.Configuration = connectionString;
                 options.InstanceName = instanceName;
             });
-            
+
             services.AddHealthChecks().AddRedis(connectionString);
         }
 

@@ -110,11 +110,11 @@ public static class VogenValidationHelper
     }
 
     /// <summary>
-            /// Converts collected field errors into a ValidationProblem response if any errors exist.
-            /// </summary>
-            /// <param name="errors">Optional dictionary mapping field names to their validation messages.</param>
-            /// <returns>A ValidationProblem built from <paramref name="errors"/>, or <c>null</c> if the dictionary is empty or <c>null</c>.</returns>
-            private static ValidationProblem? GetResult(Dictionary<string, string[]>? errors) =>
+    /// Converts collected field errors into a ValidationProblem response if any errors exist.
+    /// </summary>
+    /// <param name="errors">Optional dictionary mapping field names to their validation messages.</param>
+    /// <returns>A ValidationProblem built from <paramref name="errors"/>, or <c>null</c> if the dictionary is empty or <c>null</c>.</returns>
+    private static ValidationProblem? GetResult(Dictionary<string, string[]>? errors) =>
         errors?.Count > 0
             ? TypedResults.ValidationProblem(errors)
             : null;

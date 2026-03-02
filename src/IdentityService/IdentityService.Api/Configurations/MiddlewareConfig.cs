@@ -27,14 +27,14 @@ public static class MiddlewareConfig
         app.UseExceptionHandler();
 
         app.MapAuthentications();
-        
+
         if (app.Environment.IsDevelopment())
         {
             await SeedDatabase(app);
         }
-        
+
         app.MapDefaultEndpoints();
-        
+
         return app;
     }
 
@@ -51,7 +51,7 @@ public static class MiddlewareConfig
         {
             var context = services.GetRequiredService<AppDbContext>();
             await context.Database.MigrateAsync();
-            await SeedData.InitializeAsync(context,services);
+            await SeedData.InitializeAsync(context, services);
         }
         catch (Exception ex)
         {

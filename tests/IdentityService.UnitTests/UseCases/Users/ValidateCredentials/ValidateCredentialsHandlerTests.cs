@@ -28,7 +28,8 @@ public class ValidateCredentialsHandlerTests
         _mediator.Send(Arg.Any<GetPasswordHashQuery>(), Arg.Any<CancellationToken>())
             .Returns(new UserIdAndHashDto(userId, passwordHash));
 
-        var result = await _handler.Handle(new ValidateCredentialsQuery(userName, userPassword), CancellationToken.None);
+        var result =
+            await _handler.Handle(new ValidateCredentialsQuery(userName, userPassword), CancellationToken.None);
 
         result.IsSuccess.ShouldBeTrue();
         result.Value.ShouldBe(userId);
@@ -46,7 +47,8 @@ public class ValidateCredentialsHandlerTests
         _mediator.Send(Arg.Any<GetPasswordHashQuery>(), Arg.Any<CancellationToken>())
             .Returns(new UserIdAndHashDto(userId, passwordHash));
 
-        var result = await _handler.Handle(new ValidateCredentialsQuery(userName, wrongPassword), CancellationToken.None);
+        var result =
+            await _handler.Handle(new ValidateCredentialsQuery(userName, wrongPassword), CancellationToken.None);
 
         result.IsFailure.ShouldBeTrue();
     }
@@ -60,7 +62,8 @@ public class ValidateCredentialsHandlerTests
         _mediator.Send(Arg.Any<GetPasswordHashQuery>(), Arg.Any<CancellationToken>())
             .Returns((UserIdAndHashDto?)null);
 
-        var result = await _handler.Handle(new ValidateCredentialsQuery(userName, userPassword), CancellationToken.None);
+        var result =
+            await _handler.Handle(new ValidateCredentialsQuery(userName, userPassword), CancellationToken.None);
 
         result.IsFailure.ShouldBeTrue();
     }

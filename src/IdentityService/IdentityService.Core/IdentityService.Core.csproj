@@ -4,21 +4,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Ardalis.Specification" />
-    <PackageReference Include="CSharpFunctionalExtensions" />
+    <PackageReference Include="Ardalis.Specification"/>
+    <PackageReference Include="CSharpFunctionalExtensions"/>
     <PackageReference Include="Mediator.Abstractions"/>
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions"/>
-    <PackageReference Include="Vogen" />
+    <PackageReference Include="Vogen"/>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\ExchangeRates.SharedKernel\ExchangeRates.SharedKernel.csproj" />
+    <ProjectReference Include="..\..\ExchangeRates.SharedKernel\ExchangeRates.SharedKernel.csproj"/>
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\" />
-    <Folder Include="Services\" />
-    <Folder Include="UserAggregate\Handlers\" />
+    <Folder Include="Interfaces\"/>
+    <Folder Include="Services\"/>
+    <Folder Include="UserAggregate\Handlers\"/>
   </ItemGroup>
 
 </Project>

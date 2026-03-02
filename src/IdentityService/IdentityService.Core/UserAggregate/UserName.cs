@@ -11,11 +11,10 @@ public partial struct UserName
     /// </summary>
     /// <param name="input">The username to validate.</param>
     /// <returns>`Validation.Ok` if the input meets all requirements; otherwise an invalid `Validation` containing a primary failure message and one or more specific error messages describing which rules failed.</returns>
-
     private static Validation Validate(string input)
     {
         const string name = nameof(UserName);
-        
+
         Validation? result = null;
 
         var isNull = string.IsNullOrWhiteSpace(input);
