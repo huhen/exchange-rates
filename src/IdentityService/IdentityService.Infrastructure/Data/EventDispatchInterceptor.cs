@@ -32,6 +32,7 @@ public class EventDispatchInterceptor(IDomainEventDispatcher domainEventDispatch
         // Dispatch and clear domain events
         if (entitiesWithEvents.Length > 0)
         {
+            // need catch exceptions in future
             await domainEventDispatcher.DispatchAndClearEvents(entitiesWithEvents, cancellationToken);
         }
 

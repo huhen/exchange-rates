@@ -1,5 +1,4 @@
 using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using IdentityService.Infrastructure.Authorization;
 using IdentityService.UseCases.Abstractions.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
