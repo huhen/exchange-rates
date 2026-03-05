@@ -1,0 +1,10 @@
+global using System.Collections.Generic;
+global using System.Linq;
+global using System.Threading;
+global using System.Threading.Tasks;
+global using ExchangeRates.SharedKernel;
+global using Mediator;
+global using NSubstitute;
+global using Shouldly;
+global using Vogen;
+global using Xunit;

@@ -14,7 +14,11 @@
         <Project Path="src\IdentityService\IdentityService.Infrastructure\IdentityService.Infrastructure.csproj"/>
         <Project Path="src\IdentityService\IdentityService.UseCases\IdentityService.UseCases.csproj"/>
     </Folder>
+    <Folder Name="/src/CurrencyService/">
+        <Project Path="src\CurrencyService\CurrencyService.Core\CurrencyService.Core.csproj"/>
+    </Folder>
     <Folder Name="/tests/">
         <Project Path="tests\IdentityService.UnitTests\IdentityService.UnitTests.csproj"/>
+        <Project Path="tests\CurrencyService.UnitTests\CurrencyService.UnitTests.csproj"/>
     </Folder>
 </Solution>
