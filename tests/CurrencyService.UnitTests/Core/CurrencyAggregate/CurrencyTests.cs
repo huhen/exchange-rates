@@ -10,20 +10,23 @@ public class CurrencyTests
         // Arrange
         var charCode = CurrencyCharCode.From("USD");
         var name = CurrencyName.From("US Dollar");
+        var rate = CurrencyRate.From(1.5m);
 
         // Act
-        var currency = new Currency(charCode, name);
+        var currency = new Currency(charCode, name, rate);
 
         // Assert
         currency.CharCode.ShouldBe(charCode);
         currency.Name.ShouldBe(name);
+        currency.Rate.ShouldBe(rate);
     }
 
     [Fact]
     public void UpdateName_WithNewName_ShouldUpdateName()
     {
         // Arrange
-        var currency = new Currency(CurrencyCharCode.From("USD"), CurrencyName.From("US Dollar"));
+        var currency = new Currency(CurrencyCharCode.From("USD"), CurrencyName.From("US Dollar"),
+            CurrencyRate.From(1.5m));
         var newName = CurrencyName.From("United States Dollar");
 
         // Act
@@ -39,7 +42,7 @@ public class CurrencyTests
     {
         // Arrange
         var initialName = CurrencyName.From("US Dollar");
-        var currency = new Currency(CurrencyCharCode.From("USD"), initialName);
+        var currency = new Currency(CurrencyCharCode.From("USD"), initialName, CurrencyRate.From(1.5m));
 
         // Act
         var result = currency.UpdateName(initialName);
@@ -53,8 +56,9 @@ public class CurrencyTests
     public void UpdateRate_WithNewRate_ShouldUpdateRate()
     {
         // Arrange
-        var currency = new Currency(CurrencyCharCode.From("USD"), CurrencyName.From("US Dollar"));
-        var newRate = CurrencyRate.From(1.5m);
+        var initialRate = CurrencyRate.From(1.5m);
+        var currency = new Currency(CurrencyCharCode.From("USD"), CurrencyName.From("US Dollar"), initialRate);
+        var newRate = CurrencyRate.From(2.5m);
 
         // Act
         var result = currency.UpdateRate(newRate);
@@ -68,9 +72,8 @@ public class CurrencyTests
     public void UpdateRate_WithSameRate_ShouldNotModifyAndReturnSame()
     {
         // Arrange
-        var currency = new Currency(CurrencyCharCode.From("USD"), CurrencyName.From("US Dollar"));
         var initialRate = CurrencyRate.From(1.5m);
-        currency.UpdateRate(initialRate);
+        var currency = new Currency(CurrencyCharCode.From("USD"), CurrencyName.From("US Dollar"), initialRate);
 
         // Act
         var result = currency.UpdateRate(initialRate);
