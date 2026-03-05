@@ -13,10 +13,12 @@ public sealed class Currency : EntityBase<Currency, CurrencyId>, IAggregateRoot
     /// </summary>
     /// <param name="charCode">The currency's character code.</param>
     /// <param name="name">The currency's display name.</param>
-    public Currency(CurrencyCharCode charCode, CurrencyName name)
+    /// <param name="rate">The currency's exchange rate</param>
+    public Currency(CurrencyCharCode charCode, CurrencyName name, CurrencyRate rate)
     {
         CharCode = charCode;
         Name = name;
+        Rate = rate;
     }
 
     /// <summary>
