@@ -3,9 +3,6 @@ namespace CurrencyService.Core;
 public static class CoreServiceExtensions
 {
     /// <summary>
-    /// Registers core project services into the provided service collection and logs an informational message indicating core services were registered.
-    /// </summary>
-    /// <summary>
     /// Registers core framework services into the provided service collection and logs that core services were registered.
     /// </summary>
     /// <param name="services">The service collection to register services into.</param>
