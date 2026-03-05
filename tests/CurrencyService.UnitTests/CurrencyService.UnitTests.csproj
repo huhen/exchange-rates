@@ -35,11 +35,7 @@
 
   <ItemGroup>
     <Folder Include="Core\Services\"/>
-    <Folder Include="Core\UserAggregate\Events\"/>
-    <Folder Include="Core\UserAggregate\Specifications\"/>
-    <Folder Include="UseCases\Users\"/>
-    <Folder Include="UseCases\Users\Register\"/>
-    <Folder Include="UseCases\Users\ValidateCredentials\"/>
+    <Folder Include="UseCases\" />
   </ItemGroup>
 
   <ItemGroup>

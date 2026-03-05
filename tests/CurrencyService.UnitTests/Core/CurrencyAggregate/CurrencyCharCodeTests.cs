@@ -1,5 +1,4 @@
 using CurrencyService.Core.CurrencyAggregate;
-using Vogen;
 
 namespace CurrencyService.UnitTests.Core.CurrencyAggregate;
 

@@ -6,4 +6,5 @@ global using ExchangeRates.SharedKernel;
 global using Mediator;
 global using NSubstitute;
 global using Shouldly;
+global using Vogen;
 global using Xunit;

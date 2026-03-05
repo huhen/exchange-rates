@@ -54,7 +54,7 @@ public class CurrencyTests
     {
         // Arrange
         var currency = new Currency(CurrencyCharCode.From("USD"), CurrencyName.From("US Dollar"));
-        var newRate = CurrencyRate.From(1.5);
+        var newRate = CurrencyRate.From(1.5m);
 
         // Act
         var result = currency.UpdateRate(newRate);
@@ -69,7 +69,7 @@ public class CurrencyTests
     {
         // Arrange
         var currency = new Currency(CurrencyCharCode.From("USD"), CurrencyName.From("US Dollar"));
-        var initialRate = CurrencyRate.From(1.5);
+        var initialRate = CurrencyRate.From(1.5m);
         currency.UpdateRate(initialRate);
 
         // Act

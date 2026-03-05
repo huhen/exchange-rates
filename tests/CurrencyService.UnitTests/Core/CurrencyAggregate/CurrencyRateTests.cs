@@ -1,5 +1,4 @@
 using CurrencyService.Core.CurrencyAggregate;
-using Vogen;
 
 namespace CurrencyService.UnitTests.Core.CurrencyAggregate;
 
@@ -9,7 +8,7 @@ public class CurrencyRateTests
     [InlineData(1.0)]
     [InlineData(0.5)]
     [InlineData(100.25)]
-    public void From_WithValidRate_ShouldCreateSuccessfully(double validRate)
+    public void From_WithValidRate_ShouldCreateSuccessfully(decimal validRate)
     {
         // Act
         var rate = CurrencyRate.From(validRate);
@@ -22,10 +21,7 @@ public class CurrencyRateTests
     [InlineData(0)]
     [InlineData(-1.0)]
     [InlineData(-100.0)]
-    [InlineData(double.NaN)]
-    [InlineData(double.NegativeInfinity)]
-    [InlineData(double.PositiveInfinity)]
-    public void From_WithInvalidRate_ShouldThrowValidationException(double invalidRate)
+    public void From_WithInvalidRate_ShouldThrowValidationException(decimal invalidRate)
     {
         // Act & Assert
         var exception = Should.Throw<ValueObjectValidationException>(() => CurrencyRate.From(invalidRate));
